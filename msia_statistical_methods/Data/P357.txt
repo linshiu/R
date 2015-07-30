@@ -1,0 +1,11 @@
+League 	Distance 	Success 	Attempts 	Z 
+NFL 	14.5 	68 	77 	0 
+NFL 	24.5 	74 	95 	0 
+NFL 	34.5 	61 	113 	0 
+NFL 	44.5 	38 	138 	0 
+NFL 	52.0 	2 	38 	0 
+AFL 	14.5 	62 	67 	1 
+AFL 	24.5 	49 	70 	1 
+AFL 	34.5 	43 	79 	1 
+AFL 	44.5 	25 	82 	1 
+AFL 	52.0 	7 	24 	1 

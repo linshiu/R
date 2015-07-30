@@ -1,0 +1,866 @@
+---
+title: "MSIA 401 - Homework #7"
+output: word_document
+---
+# MSIA 401 - Hw7
+## *Steven Lin*
+
+# Setup
+```{r setup}
+# My PC
+main = "C:/Users/Steven/Documents/Academics/3_Graduate School/2014-2015 ~ NU/"
+
+# Aginity
+#main = "\\\\nas1/labuser169"
+
+course = "MSIA_401_Statistical Methods for Data Mining"
+datafolder = "Data"
+setwd(file.path(main,course, datafolder))
+
+opts_knit$set(root.dir = getwd())
+
+```
+
+# Problem 1
+
+```{r P1,results='hide'}
+
+# Import data
+filename = "P012.txt"
+mydata = read.table(filename,header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+
+```
+
+## Part a
+
+**It makes more sense to find the probability of at least one O-ring failure since an O-ring prevents the rocket from exploding, but problem is not asking to model probability of at least one failure, but rather the probability of failure (similar to Problem 2, where you woulndn't create a binary variable to model the probability of success as at least one success in the attempts).** 
+
+```{r warning=FALSE }
+
+# create binary variable
+mydata = data.frame(Damaged_bin= ifelse(mydata$Damaged>=1,1,0) ,mydata)
+
+# fit logistic
+fit = glm(cbind(Damaged,6-Damaged) ~ Temp, family=binomial(link="logit"), data=mydata) 
+fit2 = glm(Damaged_bin ~ Temp, family=binomial(link="logit"), data=mydata) 
+
+# Plot
+# http://www.shizukalab.com/toolkits/plotting-logistic-regression-in-r
+# http://www.harding.edu/fmccown/r/
+# Legend
+# http://www.statmethods.net/advgraphs/axes.html
+
+temps = seq(30,80,1)
+
+plot(mydata$Temp,mydata$Damaged_bin,pch=16,
+     xlab="Temperature (F)",
+     ylab="Actual outcome and Predicted Probabilities", xlim=c(15,85))
+
+curve(predict(fit,data.frame(Temp=x),type="resp"),add=TRUE,col="Blue",lwd=2) 
+points(mydata$Temp,predict(fit,data.frame(Temp=mydata$Temp),type="resp"), 
+       pch=16,col="Blue")
+
+curve(predict(fit2,data.frame(Temp=x),type="resp"),add=TRUE,col="Red",lwd=2)
+points(mydata$Temp,predict(fit2,data.frame(Temp=mydata$Temp),type="resp"), 
+       pch=16,col="Red")
+
+legend("bottomleft",inset=0.05, c("Fit1","Fit2"),col=c("Blue","Red"),lty=1)
+
+summary(fit)
+summary(fit2)
+
+fit$coeff["(Intercept)"]
+exp(fit$coeff["(Intercept)"])
+
+fit$coeff["Temp"]
+exp(fit$coeff["Temp"])
+1-exp(fit$coeff["Temp"])
+
+1/exp(fit$coeff["Temp"])
+1/exp(fit$coeff["Temp"])-1
+
+```
+Note: could use binary variable that indicates damage of a least one O-ring (Damage_bin = 1 when Damage >=1, 0 otherwise). However, we would be losing information regarding the number of O-rings that were damaged out of the total 6 O-rings, meaning we will not be differentiating a temperature that had more than one O-ring failure vs a temperature that had only one O-ring failure. Thus, the number of O-rings that were damaged and the number of O-rings that did not get damaged are used as inputs to the model. All answers in this section refer to fit1 (using number of successes and failures). Results from fit2 (using binary) are shown in the summary above. Interpretations for fit2 would be the same except that we would be referring to  the probability of at least one O-ring failure.
+
+For this problem, we are modeling the probability of an O-ring failure (i.e. damaged)
+
+The intercept is just the expected log odds of an O-ring failure (versus no failure) when the temperature is zero degrees Farenheight. So here the expected log odds is `r fit$coeff["(Intercept)"]`, or the odds is `r exp(fit$coeff["(Intercept)"])` when the temperature is 0 F. The model indicates that intercept is also significant at 0.05 level. 
+
+The coefficients of the predictor variables indicate the expected change in the log odds of the outcome for a one-unit increase in the predictor variable. So in this example, the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected change in the log odds of an O-ring failure (versus no failure) is `r fit$coeff["Temp"]` (or decrease `r abs(fit$coeff["Temp"])`). Equivalently, for every one-unit decrease in the temperature (a degree Fahrenheit), the log odds of an O-ring failure (versus no failure) increases by `r abs(fit$coeff["Temp"])`. Because the coefficient is negative, the probability of an O-ring failure is higher at lower temperatures. The Wald statistic and p-value < 0.05 indicates the effect of temperature on o-ring damage is significant.
+
+A more intuitive intepretation is that the exponential of the coefficient of the predictor variables is the multiplicative factor by which the odds of the outcome is expected to change given a one-unit increase in the  predictor variable. So in this example,  the exponential of the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected odds of an O-ring failure (versus no failure) changes by a factor of `r exp(fit$coeff["Temp"])` (or decrease of `r (1-exp(fit$coeff["Temp"]))*100` %). In other words, the odds of an O-ring failure (versus no failure) is expected to decrease by `r (1-exp(fit$coeff["Temp"]))*100` % for each one-unit increase in the temperature (a degree Fahrenheit). Equivalently, for each one-unit decrease in the temperature (a degree Fahrenheit), the expected odds are multiplied by `r 1/exp(fit$coeff["Temp"])` (or increase by `r (1/exp(fit$coeff["Temp"])-1)*100` %)
+
+Alternatively, the exponential of the coefficient of the predictor variables is the odds ratio (odds if corresponding variable is increamented by 1 over odds if variable not incremented). Thus, the odds ratio is `r exp(fit$coeff["Temp"])` for a one-unit increase in the temperature (a degree Fahrenheit), meaning the probability of an O-ring failure (versus no failure) equals 1 is `r exp(fit$coeff["Temp"])` as likely as the value of the temperature is increased one unit (one degree Fahrenhiet). Equivalently, the  probability of an O-ring failure (versus no failure) equals 1 is `r 1/exp(fit$coeff["Temp"])` as likely as the value of the temperature is decreased one unit (one degree Fahrenhiet).
+
+## Part b
+
+```{r warning=FALSE }
+
+# remove obs 18
+mydata = subset(mydata,as.numeric(rownames(mydata))!=18)
+mydata
+
+# fit logistic
+fit = glm(cbind(Damaged,6-Damaged) ~ Temp, family=binomial(link="logit"), data=mydata) 
+fit2 = glm(Damaged_bin ~ Temp, family=binomial(link="logit"), data=mydata) 
+
+# Plot
+# http://www.shizukalab.com/toolkits/plotting-logistic-regression-in-r
+# http://www.harding.edu/fmccown/r/
+# Legend
+# http://www.statmethods.net/advgraphs/axes.html
+
+temps = seq(30,80,1)
+
+plot(mydata$Temp,mydata$Damaged_bin,pch=16,
+     xlab="Temperature (F)",
+     ylab="Actual outcome and Predicted Probabilities", xlim=c(15,85))
+
+curve(predict(fit,data.frame(Temp=x),type="resp"),add=TRUE,col="Blue",lwd=2) 
+points(mydata$Temp,predict(fit,data.frame(Temp=mydata$Temp),type="resp"), 
+       pch=16,col="Blue")
+
+curve(predict(fit2,data.frame(Temp=x),type="resp"),add=TRUE,col="Red",lwd=2)
+points(mydata$Temp,predict(fit2,data.frame(Temp=mydata$Temp),type="resp"), 
+       pch=16,col="Red")
+
+legend("bottomleft",inset=0.05, c("Fit1","Fit2"),col=c("Blue","Red"),lty=1)
+
+summary(fit)
+summary(fit2)
+
+fit$coeff["(Intercept)"]
+exp(fit$coeff["(Intercept)"])
+
+fit$coeff["Temp"]
+exp(fit$coeff["Temp"])
+1-exp(fit$coeff["Temp"])
+
+1/exp(fit$coeff["Temp"])
+1/exp(fit$coeff["Temp"])-1
+
+```
+
+Note: could use binary variable that indicates damage of a least one O-ring (Damage_bin = 1 when Damage >=1, 0 otherwise). However, we would be losing information regarding the number of O-rings that were damaged out of the total 6 O-rings, meaning we will not be differentiating a temperature that had more than one O-ring failure vs a temperature that had only one O-ring failure. Thus, the number of O-rings that were damaged and the number of O-rings that did not get damaged are used as inputs to the model. All answers in this section refer to fit1 (using number of successes and failures). Results from fit2 (using binary) are shown in the summary above. Interpretations for fit2 would be the same except that we would be referring to  the probability of at least one O-ring failure.
+
+For this problem, we are modeling the probability of an O-ring failure (i.e. damaged)
+
+The intercept is just the expected log odds of an O-ring failure (versus no failure) when the temperature is zero degrees Farenheight. So here the expected log odds is `r fit$coeff["(Intercept)"]`, or the odds is `r exp(fit$coeff["(Intercept)"])` when the temperature is 0 F. The model indicates that intercept is also significant at 0.05 level. 
+
+The coefficients of the predictor variables indicate the expected change in the log odds of the outcome for a one-unit increase in the predictor variable. So in this example, the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected change in the log odds of an O-ring failure (versus no failure) is `r fit$coeff["Temp"]` (or decrease `r abs(fit$coeff["Temp"])`). Equivalently, for every one-unit decrease in the temperature (a degree Fahrenheit), the log odds of an O-ring failure (versus no failure) increases by `r abs(fit$coeff["Temp"])`. Because the coefficient is negative, the probability of an O-ring failure is higher at lower temperatures. The Wald statistic and p-value < 0.05 indicates the effect of temperature on o-ring damage is significant.
+
+A more intuitive intepretation is that the exponential of the coefficient of the predictor variables is the multiplicative factor by which the odds of the outcome is expected to change given a one-unit increase in the  predictor variable. So in this example,  the exponential of the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected odds of an O-ring failure (versus no failure) changes by a factor of `r exp(fit$coeff["Temp"])` (or decrease of `r (1-exp(fit$coeff["Temp"]))*100` %). In other words, the odds of an O-ring failure (versus no failure) is expected to decrease by `r (1-exp(fit$coeff["Temp"]))*100` % for each one-unit increase in the temperature (a degree Fahrenheit). Equivalently, for each one-unit decrease in the temperature (a degree Fahrenheit), the expected odds are multiplied by `r 1/exp(fit$coeff["Temp"])` (or increase by `r (1/exp(fit$coeff["Temp"])-1)*100` %)
+
+Alternatively, the exponential of the coefficient of the predictor variables is the odds ratio (odds if corresponding variable is increamented by 1 over odds if variable not incremented). Thus, the odds ratio is `r exp(fit$coeff["Temp"])` for a one-unit increase in the temperature (a degree Fahrenheit), meaning the probability of an O-ring failure (versus no failure) equals 1 is `r exp(fit$coeff["Temp"])` as likely as the value of the temperature is increased one unit (one degree Fahrenhiet). Equivalently, the  probability of an O-ring failure (versus no failure) equals 1 is `r 1/exp(fit$coeff["Temp"])` as likely as the value of the temperature is decreased one unit (one degree Fahrenhiet).
+
+## Part c
+```{r}
+prob = predict(fit, data.frame(Temp=31),type="resp") # resp -> converts to probabilities
+signif(prob,6)
+sprintf("%.6f",prob)
+
+prob2= predict(fit2, data.frame(Temp=31),type="resp") # resp -> converts to probabilities
+signif(prob2,6)
+sprintf("%.6f",prob2)
+
+```
+
+The probability of an O-ring failure when temperature is 31 degree F is `r sprintf("%.6f",prob)`. Using the binary fit, the probabilty of at least one O-ring failure is `r sprintf("%.6f",prob2)`.
+
+## Part d
+
+It is NOT advisable to launch on that particular day because the probability of an O-ring failure is very high, meaning it is extremely likely that an O-ring will fail on that day given the temperature of 31 degree F. The probability that at least one of the O-ring (out of the 6) would fail is almost 1 (using the binary fit, or 1 ~ P(at least one out of six will fail) = 1 - P(None of the six wil fail), where P(None of the six will fail) = (1-P(O-ring failure))^6 and P(O-ring failure) = `r sprintf("%.6f",prob)`). Note that the probability that all six O-rings will fail is also high at `r prob^6*100` % (P(all six fail)= P(O-ring failure)^6 , where P(O-ring failure)=`r sprintf("%.6f",prob)`).
+
+However, the 31 degree F is outside the range of the predicted range of the model. So caution should be taken when making decisions based on the model. 
+
+# Problem 2
+
+```{r P2,results='hide'}
+
+# Import data
+filename = "P357.txt"
+mydata = read.table(filename,header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+
+```
+
+## Part a
+``` {r}
+# http://stats.stackexchange.com/questions/26762/how-to-do-logistic-regression-in-r-when-outcome-is-fractional
+# http://www.stat.ufl.edu/~presnell/Courses/sta4504-2000sp/R/R-CDA.pdf
+
+mydataNFL = subset(mydata,League=="NFL")
+mydataAFL = subset(mydata,League=="AFL")
+
+# input as Success, Failures
+fitNFL = glm(cbind(Success,Attempts-Success) ~ Distance + I(Distance^2),
+             family=binomial(link="logit"), data=mydataNFL) 
+fitAFL = glm(cbind(Success,Attempts-Success) ~ Distance + I(Distance^2),
+             family=binomial(link="logit"), data=mydataAFL) 
+
+# Other option: input as Success/Total
+# fitNFL = glm(Success/Attempts ~ Distance + I(Distance^2), weights= Attempts,
+#              family=binomial(link="logit"), data=mydataNFL) 
+
+summary(fitNFL)
+summary(fitAFL)
+
+```
+## Part b
+``` {r}
+
+fit = glm(cbind(Success,Attempts-Success) ~ Distance + I(Distance^2) + Z,
+             family=binomial(link="logit"), data=mydata) 
+summary(fit)
+```
+
+## Part c
+
+``` {r}
+pvalue = summary(fit)$coef["I(Distance^2)", "Pr(>|z|)" ]
+pvalue
+
+```
+
+The p-value for the quadratic term is `r pvalue` > 0.05, which indicates that the quadratic term is insignificant (cannot reject Ho that the coefficient is equal to zero given other variables in the model) and thus does NOT contribute significantly to the model.
+
+
+## Part d
+
+``` {r}
+pvalue = summary(fit)$coef["Z", "Pr(>|z|)" ]
+pvalue
+
+fit2 = update(fit, . ~ . - I(Distance^2))
+summary(fit2)
+pvalue2 = summary(fit)$coef["Z", "Pr(>|z|)" ]
+pvalue2
+
+# odds ratios and 95% CI
+exp(cbind(OR = coef(fit), confint(fit)))
+
+```
+
+The p-value for the Z term is `r pvalue` > 0.05, which indicates that the Z term (league indicator) is insignificant (cannot reject Ho that the coefficient is equal to zero given other variables in the model) and thus does NOT contribute significantly to the model. In other words, because the effect of the leauge is insignificant after taking into account distance and distance^2, then the probabilities of scoring field goals from a given distance and distance^2 are NOT statistically different for each league (i.e. probabilities are the same for each league). 
+
+Removing the insignificant quadratic term, the p-value for the Z term is `r pvalue2` > 0.05, which indicates that the Z term (league indicator) is insignificant (cannot reject Ho that the coefficient is equal to zero given other variables in the model) and thus does NOT contribute significantly to the model. In other words, because the effect of the leauge is insignificant after taking into account distance , then the probabilities of scoring field goals from a given distance are NOT statistically different for each league (i.e. probabilities are the same for each league). Note that also the 95% CI of odds ratio of scoring field goals in a given distance for the AFL vs NFL contains 1, suggesting that the odds ratio is not significantly different than one, meaning the odds of scoring given a distance for AFL vs NFL are not statistically different. 
+
+# Problem 3
+
+```{r P3,results='hide'}
+
+# Import data
+filename = "P014.txt"
+mydata = read.table(filename,header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+
+n=dim(mydata)[1]
+
+```
+
+## Part a
+```{r}
+
+# remove NETREV , since NETREV = PCREV - FEXP
+fit = glm(RURAL ~ .-NETREV, family=binomial(link="logit"), data=mydata) 
+summary(fit)
+
+# Asssess model fit ####
+logLik(fit)
+deviance(fit)  # -2*logLik(fit)
+fit$deviance
+fit$null.deviance 
+G2 = fit$null.deviance - deviance(fit)
+G2
+
+pvalue = 1-pchisq(fit$null.deviance-deviance(fit),6)
+pvalue
+q_crit = qchisq(p=.95, df=6)
+G2>q_crit
+
+# Null deviance = left unexplained after fittings beta's
+# Bigger difference -> more explained
+# How much addtw two predictors explain = 79
+   
+# 6 = 6 constraints H0: beta 1 = beta 2 ...beta 6
+fit0 = glm(RURAL  ~ 1,  family=binomial(link="logit"), data=mydata)
+anova(fit0,fit,test="Chisq")
+
+
+```
+The overall goodness of fit G^2 = `r G2` > \( \chi \ 2 \)(0.05, 6) = `r q_crit` (pvalue = `r pvalue` < 0.05 ), so the null hypothesis that the coefficients of the predictors are zero is rejected at a 0.05 level. At least one of the predictors has an statistically significant effect on the response variable (probability rural vs non-rural), suggesting that rural vs non-rural facilities differ on at least one of the characteristics.
+
+```{r warning=FALSE, message=FALSE}
+
+# Find best model using AIC and BIC criteria
+fitAIC = step(fit, direction='both')
+fitBIC = step(fit, direction='both', k=log(n))
+summary(fitAIC)
+summary(fitBIC)
+
+
+mydata2 = within(mydata,{
+  NETREV = NULL
+})
+
+mydata2 = cbind(mydata2[,-1],RURAL = mydata2[,1])
+head(mydata2)
+
+# http://rstudio-pubs-static.s3.amazonaws.com/2897_9220b21cfc0c43a396ff9abf122bb351.html
+# install.packages("bestglm")
+# http://www2.uaem.mx/r-mirror/web/packages/bestglm/vignettes/bestglm.pdf
+library(bestglm)
+best_glm = bestglm(Xy = mydata2, IC = "AIC",family=binomial, method="exhaustive")
+names(best_glm)
+best_glm$BestModel
+best_glm$BestModels
+best_glm$Subsets
+
+best_glm = bestglm(Xy = mydata2, IC = "BIC",family=binomial, method="exhaustive")
+names(best_glm)
+best_glm$BestModel
+best_glm$BestModels
+best_glm$Subsets
+
+# best_glm = bestglm(Xy = mydata2, IC = "BICg",family=binomial, method="exhaustive")
+# names(best_glm)
+# best_glm$BestModel
+# best_glm$Subsets
+# 
+# best_glm = bestglm(Xy = mydata2, IC = "BICq",family=binomial, method="exhaustive")
+# names(best_glm)
+# best_glm$BestModel
+# best_glm$Subsets
+
+best_glm = bestglm(Xy = mydata2, IC = "CV",family=binomial, method="exhaustive")
+names(best_glm)
+best_glm$BestModel
+best_glm$BestModels
+best_glm$Subsets
+
+# http://www.jstatsoft.org/v34/i12/paper
+# http://r.789695.n4.nabble.com/glmulti-fails-because-of-rJava-td4100391.html
+# http://www.dummies.com/how-to/content/how-to-install-and-configure-rstudio.html
+# Need to use 32 bit
+# install.packages("glmulti")
+library(glmulti)
+glmulti.logistic.out <-
+    glmulti(RURAL~ ., data = mydata2,
+            level = 1,               # No interaction considered
+            method = "h",            # Exhaustive approach
+            crit = "aic",            # AIC as criteria
+            confsetsize = 5,         # Keep 5 best models
+            plotty = F, report = F,  # No plot or interim reports
+            fitfunction = "glm",     # glm function
+            family = binomial)       # binomial family for logistic regression
+
+## Show 5 best models (Use @ instead of $ for an S4 object)
+glmulti.logistic.out@formulas
+summary(glmulti.logistic.out)
+
+
+plot(glmulti.logistic.out, type="p")
+
+# ranked relative evidence weight of the models
+# They can be interpreted as probabilities for each model to be the best in the set
+# A red vertical line is shown where the cumulated evidence weight reaches 95%
+plot(glmulti.logistic.out, type = "w")
+
+# The third option plots for each term its estimated importance (or relative evidence weight), computed as the sum of the relative evidence weights of all models in which the term appears
+plot(glmulti.logistic.out, type = "s")
+
+# Use LRT forward
+add1(fit0,test="Chisq",scope=~BED+MCDAYS+TDAYS+PCREV+NSAL+FEXP,data=mydata2)
+fit1 = update(fit0,.~.+NSAL)
+add1(fit1,test="Chisq",scope=~BED+MCDAYS+TDAYS+PCREV+NSAL+FEXP,data=mydata2)
+# Don't add anything else, model is RURAL~NSAL
+
+# Use LRT backward
+drop1(fit,test="Chisq",data=mydata2)
+fit1 = update(fit,.~.-PCREV)
+# get the same result as LRT forward
+
+#ROC and Concordance
+#http://web.expasy.org/pROC/screenshots.html
+#http://thestatsgeek.com/2014/05/05/area-under-the-roc-curve-assessing-discrimination-in-logistic-regression/
+
+# install.packages("pROC",dependencies= T)
+# install.packages("Rcpp")
+
+library(pROC)
+
+# roc = area under curve = predicted power of model
+# adding extra predictors better, but not adding interaction
+fit1 =  glm(RURAL ~ NSAL, family=binomial(link="logit"), data=mydata) 
+fit2  = glm(RURAL ~ MCDAYS+NSAL+TDAYS, family=binomial(link="logit"), data=mydata) 
+rocobj1= plot.roc(mydata2$RURAL,
+                  fit1$fitted.values, percent = TRUE,col="#1c61b6")
+      
+rocobj2= plot.roc(mydata2$RURAL,fit2$fitted.values, 
+                  add=T, percent = TRUE,col="#008600")# T = don't erase previous grap
+
+legend("bottomright", legend=c("NSAL", "NSAL+MCDAYS+TDAYS"), 
+       col=c("#1c61b6", "#008600"), lwd=2, inset=0.05,cex=0.75)
+
+testobj = roc.test(rocobj1, rocobj2)
+text(50, 50, labels=paste("p-value =", format.pval(testobj$p.value)), adj=c(0, .5))
+
+```
+
+The best logistic regression model according to BIC is RURAL~NSAL, according to AIC is RURAL~MCDAYS+NSAL+TDAYS, and according to CV is RURAL~NSAL . Using LRT sequentially the best model is RURAL~NSAL. Note that by looking at the ROC curves and concordance index (Area Under the Curve = percent concordant adjusted for ties), we see that RURAL~MCDAYS+NSAL+TDAYS has higher discriminatory power than RURAL~NSAL. AUC can be interpreted as being the fraction of 0-1 pairs correctly classified by the model. However, the difference betwween the AUC's are not statistically different. Thus, the best mdodel seems to be RURAL~NSAL (including intercept).
+
+## Part b
+```{r warning=FALSE,message=FALSE}
+# Stepwise regression to determine best model, start with all variables
+library(MASS)
+fit= lm(PCREV~., data=mydata2)
+summary(fit)
+# Find best model using AIC and BIC criteria
+fitAIC = step(fit, direction='both')
+fitBIC = step(fit, direction='both', k=log(n))
+summary(fitAIC)
+summary(fitBIC)
+
+x = mydata2[,-4] # design matrix or use model.matrix(fullfit)
+y = mydata2[,4]  # response vector
+
+# function returns best subset function with different criteria
+modelSelection = function(x,y){
+  # Inputs:
+  # x = design matrix
+  # y = response vector
+  n = length(y) # number of observations
+  p = dim(x)[2] # number of predictors
+  
+  # Variable Selection Using Package 
+  library(leaps)
+  
+  # find the best subset
+  reg_exh= regsubsets(x,y, nbest=1, nvmax=n, method="exhaustive")
+  #summary(reg_exh,matrix.logical=TRUE)
+  #names(reg_exh)
+  #names(summary(reg_exh))
+
+  # get matrix with models
+  models = summary(reg_exh)$which # T/F -> multiply by 1 to get 1/0 (not needed)
+  msize=as.numeric(apply(models,1,sum)) # model size
+  
+  # compute criteria
+  cp = summary(reg_exh)$cp; cp = round(cp,3)
+  adjr2 = summary(reg_exh)$adjr2; adjr2 = round(adjr2,3)
+  aic = n*log(summary(reg_exh)$rss/n) + 2*msize; aic = round(aic,3) 
+  bic = n*log(summary(reg_exh)$rss/n) + msize*log(n); bic = round(bic,3)
+  # different from regsubsets, just differ by constant
+  # bic = summary(reg_exh)$bic; bic = round(bic,3)
+  
+  # alternative
+  # optimizing various criteria
+  #leaps(x,y,nbest=1,method="Cp")
+  #leaps(x,y,nbest=1,method="adjr2")
+  
+  # rank by criteria
+  rk_cp = as.numeric(factor(cp))
+  rk_adjr2 = vector(length=length(adjr2 ))
+  rk_adjr2[order(adjr2,decreasing=TRUE)] = 1:length(adjr2 ) # highest is better
+  rk_aic  = as.numeric(factor(aic))
+  rk_bic = as.numeric(factor(bic))
+  
+  rk_tot = rk_cp + rk_adjr2 + rk_aic +rk_bic
+  
+  # create matrix and data frame of results
+  results = cbind(msize,models,cp,adjr2,aic,bic,rk_cp,rk_adjr2,
+                  rk_aic,rk_bic,rk_tot )
+  
+  colnames(results)[2]="Int"
+  
+  results_df = data.frame(results)
+
+  # display results
+  results 
+  
+  # alternative
+  # x1 = vector(length=length(cp))
+  # x1[order(cp)] = 1:length(cp)
+  
+  # Models
+  cp_model = c("intercept",colnames(x)[models[order(cp)[1],][-1]])
+  adjr2_model = c("intercept",colnames(x)[models[order(adjr2,decreasing=TRUE)[1],][-1]])
+  aic_model = c("intercept",colnames(x)[models[order(aic)[1],][-1]])
+  bic_model = c("intercept",colnames(x)[models[order(bic)[1],][-1]])
+  
+  cat("best cp model:\n",cp_model,"\n")
+  cat("best adjr2 model:\n",adjr2_model,"\n")
+  cat("best aic model:\n",aic_model,"\n")
+  cat("best bic model:\n",bic_model,"\n")
+  
+  # Order results
+  #results[order(cp),]; # order by Cp
+  #results[order(adjr2,decreasing=TRUE),]; # order by adjr2
+  #results[order(aic),]; # order by BIC
+  #results[order(bic),]; # order by BIC
+  
+  # alternative
+  # sort(cp, decreasing = FALSE,index.return=TRUE)$ix <-> order(cp)
+  
+  #plots
+  
+  plot(reg_exh, scale="adjr2")
+  plot(reg_exh, scale="bic")
+  plot(reg_exh, scale="Cp")
+ 
+  localenv = environment()
+  
+    require(ggplot2)
+    require(grid)
+    require(gridExtra)
+  
+    
+    plot_vector = vector(mode="list",length=4)
+    
+    plot_vector[[1]] = ggplot(results_df,aes(x=results_df[[1]], y = results_df[[p+3]]),environment = localenv) + 
+      geom_point(size = 4) +
+      geom_line(aes(y=results_df[[p+3]]), colour="blue") +
+      labs(x = colnames(results_df[1]),y = colnames(results_df[p+3])) +
+      scale_x_continuous(breaks=msize)+
+      geom_point(data=results_df[order(cp)[1], ], aes(x=msize, y=cp), colour="red", size=5)
+  
+    
+    plot_vector[[2]]  = ggplot(results_df,aes(x=results_df[[1]], y = results_df[[p+3+1]]),environment = localenv) + 
+      geom_point(size = 4) +
+      geom_line(aes(y=results_df[[p+3+1]]), colour="blue") +
+      labs(x = colnames(results_df[1]),y = colnames(results_df[p+3+1]))+
+      scale_x_continuous(breaks=msize) +
+      geom_point(data=results_df[order(adjr2,decreasing=TRUE)[1], ], aes(x=msize, y=adjr2), colour="red", size=5)
+    
+    plot_vector[[3]]  = ggplot(results_df,aes(x=results_df[[1]], y = results_df[[p+3+2]]),environment = localenv) + 
+      geom_point(size = 4) +
+      geom_line(aes(y=results_df[[p+3+2]]), colour="blue") +
+      labs(x = colnames(results_df[1]),y = colnames(results_df[p+3+2]))+
+      scale_x_continuous(breaks=msize) +
+      geom_point(data=results_df[order(aic)[1], ], aes(x=msize, y=aic), colour="red", size=5)
+    
+    plot_vector[[4]]  = ggplot(results_df,aes(x=results_df[[1]], y = results_df[[p+3+3]]),environment = localenv) + 
+      geom_point(size = 4) +
+      geom_line(aes(y=results_df[[p+3+3]]), colour="blue") +
+      labs(x = colnames(results_df[1]),y = colnames(results_df[p+3+3]))+
+      scale_x_continuous(breaks=msize) +
+      geom_point(data=results_df[order(bic)[1], ], aes(x=msize, y=bic), colour="red", size=5)
+    
+    
+    grid.arrange(plot_vector[[1]],
+                 plot_vector[[2]],
+                 plot_vector[[3]],
+                 plot_vector[[4]],
+                 ncol=2, main = "Model Selection")
+  
+  
+
+  return(results_df)
+   
+}
+
+bestSubset = modelSelection(x,y)
+bestSubset
+
+```
+
+All coefficients in the model are positive indicating higher values of the predictors values (hospital characteristics) have a positive effect in PCREV.For example, after controlling for the other hospital characteristics, a higher number of beds in home leads to an expected increase in total patient care revenue. Similar conclusions can be drawn from the coefficients of the other variables. However, only TDAYS seems to have a signficant effect on the patient care revenue. For the variable RURAL, it suggests that RURAL homes have a higher PCREV than non-rural. The effect seems to be very large, but not statistically significant. 
+
+Both AIC and BIC stepwise methods give PCREV ~ BED + TDAYS + NSAL as the model (including intercept). This model is also best in CP, AIC, BIC and second best in adjusted R^2. Thus, this model seems to be the best model in predicting PREV. 
+
+
+# Problem 4
+```{r P4,results='hide'}
+
+# Import data
+# filename = "p349-50.txt"
+# mydata = read.table(filename,header = T)
+# Note: this file is missing observations after 90, use other file instead
+
+# Import data
+filename = "diabetes.txt"
+mydata = read.table(filename, header=T)
+
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+
+
+```
+
+## Part a
+```{r warning=FALSE}
+
+#install.packages("mlogit")
+library(mlogit)
+diab = mlogit.data(data = mydata, choice="CC", shape="wide",varying=NULL)
+
+# Table 12.9: Multinomial logistic Regression with IR,SSPG
+fit = mlogit(CC~0|IR+SSPG, data = diab, reflevel="3") # 0 means "multinomial model, class "3" is base level
+summary(fit)
+
+
+# Calculate probabilities for each observation
+# or summary(fit)$prob
+Y.prob = fitted(fit, outcome= FALSE)
+head(Y.prob)
+
+# classify to the category for which it has the highest estimated probabilities
+n = dim(mydata)[1]
+Y.hat = rep(0,n)
+for(i in 1:n){
+  if(max(Y.prob[i,]) == Y.prob[i,1]){
+    Y.hat[i]=3;
+  }else if(max(Y.prob[i,]) == Y.prob[i,2]){
+    Y.hat[i]=1;
+  }else if(max(Y.prob[i,]) == Y.prob[i,3]){
+    Y.hat[i]=2;
+  }
+}
+Y.hat
+
+# Table 12.10: Classification table
+ctable = table(mydata$CC, Y.hat)
+ctable = addmargins(ctable)
+ctable
+
+correct.rate = sum(diag(ctable)[1:3])/n
+correct.rate
+
+## include RW
+#install.packages("mlogit")
+library(mlogit)
+diab = mlogit.data(data = mydata, choice="CC", shape="wide",varying=NULL)
+
+# Table 12.9: Multinomial logistic Regression with IR,SSPG
+fit = mlogit(CC~0|IR+SSPG+RW, data = diab, reflevel="3") # 0 means "multinomial model, class "3" is base level
+summary(fit)
+
+# Calculate probabilities for each observation
+# or summary(fit)$prob
+Y.prob = fitted(fit, outcome= FALSE)
+head(Y.prob)
+
+# classify to the category for which it has the highest estimated probabilities
+n = dim(mydata)[1]
+Y.hat = rep(0,n)
+for(i in 1:n){
+  if(max(Y.prob[i,]) == Y.prob[i,1]){
+    Y.hat[i]=3;
+  }else if(max(Y.prob[i,]) == Y.prob[i,2]){
+    Y.hat[i]=1;
+  }else if(max(Y.prob[i,]) == Y.prob[i,3]){
+    Y.hat[i]=2;
+  }
+}
+Y.hat
+
+# Table 12.10: Classification table
+ctable2 = table(mydata$CC, Y.hat)
+ctable2 = addmargins(ctable2)
+ctable2
+
+correct.rate2 = sum(diag(ctable2)[1:3])/n
+correct.rate2
+
+```
+
+The classification rate for multinomial logistic model CC~IR+SSPG is `r correct.rate*100` %, while the rate for CC~IR+SSPG+RW is `r correct.rate2*100` %, which is an improvement of just  `r correct.rate2*100-correct.rate*100`%. Thus, the inclusion of RW does not result in a substantial improvement in the classification rate from the multinomial logistic model using IR and SSPG. 
+
+## Part b
+```{r warning=FALSE}
+
+# Table 12.11: Ordinal Logistic Regression with IR, SSPG
+#install.packages("ordinal")
+library(ordinal)
+mydata$CC.ordered = as.ordered(mydata$CC)
+fit = clm(CC.ordered~IR+SSPG, data = mydata)
+fit1=fit
+summary(fit)
+
+# Table 12.12: Classification table
+Y.hat = predict(fit, data = mydata, type="class")$fit
+ctable = table(mydata$CC, Y.hat)
+ctable = addmargins(ctable);
+ctable
+
+correct.rate = sum(diag(ctable)[1:3])/n
+correct.rate
+
+# add RW
+
+# Table 12.11: Ordinal Logistic Regression with IR, SSPG
+#install.packages("ordinal")
+library(ordinal)
+mydata$CC.ordered = as.ordered(mydata$CC)
+fit = clm(CC.ordered~IR+SSPG+RW, data = mydata)
+summary(fit)
+
+# Table 12.12: Classification table
+Y.hat = predict(fit, data = mydata, type="class")$fit
+ctable2 = table(mydata$CC, Y.hat)
+ctable2 = addmargins(ctable2);
+ctable2
+
+correct.rate2 = sum(diag(ctable2)[1:3])/n
+correct.rate2
+
+anova(fit1,fit)
+
+```
+
+The classification rate for ordinal logistic model CC~IR+SSPG is `r correct.rate*100` %, while the rate for CC~IR+SSPG+RW is `r correct.rate2*100` %, which is an improvement of just  `r correct.rate2*100-correct.rate*100`%. Thus, the inclusion of RW does not result in a substantial improvement in the classification rate from the ordinal logistic model using IR and SSPG. 
+
+The p-value > 0.05 (do not reject null that coefficient of RW is zero) indicates that the model without RW is better than the one with RW. Thus, there in no substantial improvment in the fit by adding RW. 
+
+# Problem 5
+
+```{r P5,results='hide'}
+# Import data
+filename = "MAMMOGRAPHY+DATA.csv"
+mydata = read.csv(filename,header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+```
+
+## Part a
+```{r}
+is_even = function(x) x %% 2 == 0
+
+train_data = mydata[!sapply(mydata$OBS,is_even),c("OBS","ME","HIST","PB")]
+test_data =  mydata[sapply(mydata$OBS,is_even),c("OBS","ME","HIST","PB")]
+head(train_data)
+head(test_data)
+
+
+#install.packages("mlogit")
+library(mlogit)
+mammo = mlogit.data(data = train_data, choice="ME", shape="wide",varying=NULL)
+head(mammo,20)
+head(mydata,15)
+# Table 12.9: Multinomial logistic Regression with IR,SSPG
+fit = mlogit(ME~0| PB + HIST, data = mammo, reflevel="0") # 0 means "multinomial model, class "0" is base level
+summary(fit)
+
+# Calculate probabilities for each observation
+#Y.prob = fitted(fit, outcome= FALSE)
+
+# Need a function because want to find prob in a different data set than training
+# function predict probabilities test data has to be in same order fit variables
+predict_mlogit = function(testdata,fit){
+  beta = fit$coeff
+  beta1=beta[seq(1,length(beta),2)]
+  beta2=beta[seq(2,length(beta),2)] 
+  exp1=exp(as.matrix(cbind(rep(1,dim(testdata)[1]),testdata))%*%beta1)
+  exp2=exp(as.matrix(cbind(rep(1,dim(testdata)[1]),testdata))%*%beta2)
+  pi1=exp1/(1+exp1+exp2)
+  pi2=exp2/(1+exp1+exp2)
+  pi0=1/(1+exp1+exp2) 
+  prob = cbind(pi0=pi0,pi1=pi1,pi2=pi2)
+  colnames(prob)=c(0,1,2)
+  return(prob)
+}
+
+Y.prob = predict_mlogit(test_data[,c(4,3)],fit)
+head(Y.prob)
+
+# classify to the category for which it has the highest estimated probabilities
+
+n_train = dim(train_data)[1]
+n_test = dim(test_data)[1]
+
+Y.hat = rep(0,n_test)
+for(i in 1:n_test){
+  if(max(Y.prob[i,]) == Y.prob[i,1]){
+    Y.hat[i]=0;
+  }else if(max(Y.prob[i,]) == Y.prob[i,2]){
+    Y.hat[i]=1;
+  }else if(max(Y.prob[i,]) == Y.prob[i,3]){
+    Y.hat[i]=2;
+  }
+}
+Y.hat
+
+
+
+# Table 12.10: Classification table
+ctable = table(test_data$ME, Y.hat)
+ctable = cbind(ctable,"2"=c(0,0,0))
+ctable = addmargins(ctable)
+ctable
+
+correct.rate = sum(diag(ctable)[1:3])/n_test
+correct.rate
+1-correct.rate
+
+miss0 = sum(ctable[1,-4][-1])/ctable[1,4]
+miss1 = sum(ctable[2,-4][-2])/ctable[2,4]
+miss2 = sum(ctable[3,-4][-3])/ctable[3,4]
+miss0
+miss1
+miss2
+
+```
+
+The misclassification rate is `r (1-correct.rate)*100` %. The observed (rows) and predicted (columns) outcomes is shown above in the tabulation. The break down of the misclassification for the three categories is:
+- Never (0): `r miss0*100`%
+- within the past year (1): `r miss1*100`%
+- More than one year ago (2):  `r miss2*100`%
+
+## Part b
+```{r}
+
+#install.packages("ordinal")
+library(ordinal)
+train_data$ME.ordered = factor(train_data$ME,levels=c(0,2,1), ordered=T)
+test_data$ME.ordered = factor(test_data$ME,levels=c(0,2,1),ordered=T)
+fit = clm(ME.ordered~PB+HIST, data = train_data)
+summary(fit)
+
+# Table 12.12: Classification table
+Y.hat = predict(fit, newdata = test_data, type="class")$fit
+ctable = table(test_data$ME.ordered, Y.hat)
+ctable = addmargins(ctable);
+ctable
+
+correct.rate = sum(diag(ctable)[1:3])/n_test
+correct.rate
+1-correct.rate
+
+miss0 = sum(ctable[1,-4][-1])/ctable[1,4]
+miss1 = sum(ctable[3,-4][-3])/ctable[3,4]
+miss2 = sum(ctable[2,-4][-2])/ctable[2,4]
+miss0
+miss1
+miss2
+
+```
+The misclassification rate is `r (1-correct.rate)*100` %. The observed (rows) and predicted (columns) outcomes is shown above in the tabulation. The break down of the misclassification for the three categories is:
+- Never (0): `r miss0*100`%
+- within the past year (1): `r miss1*100`%
+- More than one year ago (2):  `r miss2*100`%
+
+Compared to the multinomial logistic model, the overall misclassification rate is the same. Looking at the breakdown, the misclassification of the ordinal model is the same as the multinomial. We do not get better predictions. 

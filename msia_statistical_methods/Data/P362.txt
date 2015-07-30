@@ -1,0 +1,17 @@
+Disease	D	P	M
+Ischemic Heart Disease  	6 	8976 	198.4   
+Lung Cancer  	3 	874   	80.2 
+HIV/AIDS  	21 	1303     	1049.6 
+Alcohol Use  	2 	18092       	222.6 
+Cerebrovascular Disease  	2 	9467      	108.5 
+COPD$^a$   	1 	4271    	48.9 
+Depression  	7 	12785      	149.5 
+Diabetes  	13 	37850     	278.4 
+Osteoarthritis  	5 	12345      	151.3 
+Drug abuse   	1 	4000     	442.1 
+Dementia   	9 	8931     	344.1 
+Asthma  	3 	15919     	41.8 
+Colon Cancer 	2 	1926    	70.6 
+Prostate Cancer   	4 	2020    	40.1 
+Breast Cancer  	9 	2262   	159.5 
+Bipolar Disorder 	2 	2418    	35.0 

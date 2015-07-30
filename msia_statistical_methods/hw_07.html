@@ -1,0 +1,2578 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>MSIA 401 - Hw7</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<h1>MSIA 401 - Hw7</h1>
+
+<h2><em>Steven Lin</em></h2>
+
+<h1>Setup</h1>
+
+<pre><code class="r"># My PC
+main = &quot;C:/Users/Steven/Documents/Academics/3_Graduate School/2014-2015 ~ NU/&quot;
+
+# Aginity main = &#39;\\\\nas1/labuser169&#39;
+
+course = &quot;MSIA_401_Statistical Methods for Data Mining&quot;
+datafolder = &quot;Data&quot;
+setwd(file.path(main, course, datafolder))
+
+opts_knit$set(root.dir = getwd())
+</code></pre>
+
+<h1>Problem 1</h1>
+
+<pre><code class="r">
+# Import data
+filename = &quot;P012.txt&quot;
+mydata = read.table(filename, header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+</code></pre>
+
+<h2>Part a</h2>
+
+<p><strong>It makes more sense to find the probability of at least one O-ring failure since an O-ring prevents the rocket from exploding, but problem is not asking to model probability of at least one failure, but rather the probability of failure (similar to Problem 2, where you woulndn&#39;t create a binary variable to model the probability of success as at least one success in the attempts).</strong> </p>
+
+<pre><code class="r">
+# create binary variable
+mydata = data.frame(Damaged_bin = ifelse(mydata$Damaged &gt;= 1, 1, 0), mydata)
+
+# fit logistic
+fit = glm(cbind(Damaged, 6 - Damaged) ~ Temp, family = binomial(link = &quot;logit&quot;), 
+    data = mydata)
+fit2 = glm(Damaged_bin ~ Temp, family = binomial(link = &quot;logit&quot;), data = mydata)
+
+# Plot
+# http://www.shizukalab.com/toolkits/plotting-logistic-regression-in-r
+# http://www.harding.edu/fmccown/r/ Legend
+# http://www.statmethods.net/advgraphs/axes.html
+
+temps = seq(30, 80, 1)
+
+plot(mydata$Temp, mydata$Damaged_bin, pch = 16, xlab = &quot;Temperature (F)&quot;, ylab = &quot;Actual outcome and Predicted Probabilities&quot;, 
+    xlim = c(15, 85))
+
+curve(predict(fit, data.frame(Temp = x), type = &quot;resp&quot;), add = TRUE, col = &quot;Blue&quot;, 
+    lwd = 2)
+points(mydata$Temp, predict(fit, data.frame(Temp = mydata$Temp), type = &quot;resp&quot;), 
+    pch = 16, col = &quot;Blue&quot;)
+
+curve(predict(fit2, data.frame(Temp = x), type = &quot;resp&quot;), add = TRUE, col = &quot;Red&quot;, 
+    lwd = 2)
+points(mydata$Temp, predict(fit2, data.frame(Temp = mydata$Temp), type = &quot;resp&quot;), 
+    pch = 16, col = &quot;Red&quot;)
+
+legend(&quot;bottomleft&quot;, inset = 0.05, c(&quot;Fit1&quot;, &quot;Fit2&quot;), col = c(&quot;Blue&quot;, &quot;Red&quot;), 
+    lty = 1)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAjVBMVEX9/v0AAAAAADkAAGUAAP8AOTkAOWUAOY8AZrU5AAA5ADk5AGU5OWU5OY85j485j9plAABlADllAGVlOQBlOY9lZjlltf2POQCPOTmPOWWPZgCPjzmPj2WPtY+P29qP2/21ZgC1tWW124+1/rW1/v3ajzna24/a/rXa/v39tWX924/9/rX9/tr9/v3/AADLNjtsAAAAL3RSTlP///////////////////////////////////////////////////////////8A/+SDKggAAAAJcEhZcwAACxIAAAsSAdLdfvwAABKXSURBVHic7Z2Jetu4FUaHTlrbzaRyPK2cdtra07E61sK8/+OVICiJlEgKALHc5T+f88WJhEvZhxcASSw/1UAlP5X+AKAMEK8UiFcKxCsF4pUC8UqBeKVAvFIgXikQrxSIVwrEKwXilQLxSoF4pUC8UiBeKRCvFIhXCsQrBeKVAvFKgXilQLxSIF4pEK8UiFcKxCsF4pUC8UqBeKVAvFIgXikQrxSIVwrEKwXilQLxSoF4pUC8UiBeKRCvFIhXCsQrBeKVAvFKgXilQLxSIF4pEK8UiFcKxCsF4pUC8UqBeKVAvFIgXikQr5Ql4itAmYTiF5QFqYF4pUC8UiBeKRCvlMXid49tH/HTu29oUJSl4g8v6/bv7f2HZ2hQlKXi98/vg7/dQ4OiIOOVsriN3z+hjecIevWBjN/0tP87c0P05r3Sm29zjHDzCPMvxxT/IzELPmrADzd6u9v+78ytcIe75Dfe5hjh9iHmX3YW3+vcTTwGSO3dA79f0SgQHxw6NnnPA4gPDl2OKCcA2vjQ0GRI0RLQB+JP6JK/+M7dU9eTu76Q5yb+iA75izP+8LIKC00a+e6XV/X7b69BockjWz7a+DkE1/oQfwuh6iHeBYHqId4Ncerzif9sWBCuNMLUZxbPWr4o9Xmreu7uBanP38bzli/GfJHOHetaX4j6Yr16vuplmC96OQf15Sh8Hc807wXczCt+A4ez+tIfYgnFxRsYqof44NAD2JmH+ODQF3BTz908GfEMG3vW5umIZ6iec9JTEm/gpZ6xeWriGaov/RHCoCeemXqu5imK59XFh3jP0PMwUs/TPFXxjMzzrOzJimeknqV5wuL5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" alt="plot of chunk unnamed-chunk-1"/> </p>
+
+<pre><code class="r">
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = cbind(Damaged, 6 - Damaged) ~ Temp, family = binomial(link = &quot;logit&quot;), 
+##     data = mydata)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.9523  -0.7830  -0.5412  -0.0438   2.6515  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)    5.085      3.053    1.67    0.096 .
+## Temp          -0.116      0.047   -2.46    0.014 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 24.230  on 22  degrees of freedom
+## Residual deviance: 18.086  on 21  degrees of freedom
+## AIC: 35.65
+## 
+## Number of Fisher Scoring iterations: 5
+</code></pre>
+
+<pre><code class="r">summary(fit2)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Damaged_bin ~ Temp, family = binomial(link = &quot;logit&quot;), 
+##     data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.061  -0.761  -0.378   0.452   2.217  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)   15.043      7.379    2.04    0.041 *
+## Temp          -0.232      0.108   -2.14    0.032 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 28.267  on 22  degrees of freedom
+## Residual deviance: 20.315  on 21  degrees of freedom
+## AIC: 24.32
+## 
+## Number of Fisher Scoring iterations: 5
+</code></pre>
+
+<pre><code class="r">
+fit$coeff[&quot;(Intercept)&quot;]
+</code></pre>
+
+<pre><code>## (Intercept) 
+##       5.085
+</code></pre>
+
+<pre><code class="r">exp(fit$coeff[&quot;(Intercept)&quot;])
+</code></pre>
+
+<pre><code>## (Intercept) 
+##       161.6
+</code></pre>
+
+<pre><code class="r">
+fit$coeff[&quot;Temp&quot;]
+</code></pre>
+
+<pre><code>##    Temp 
+## -0.1156
+</code></pre>
+
+<pre><code class="r">exp(fit$coeff[&quot;Temp&quot;])
+</code></pre>
+
+<pre><code>##   Temp 
+## 0.8908
+</code></pre>
+
+<pre><code class="r">1 - exp(fit$coeff[&quot;Temp&quot;])
+</code></pre>
+
+<pre><code>##   Temp 
+## 0.1092
+</code></pre>
+
+<pre><code class="r">
+1/exp(fit$coeff[&quot;Temp&quot;])
+</code></pre>
+
+<pre><code>##  Temp 
+## 1.123
+</code></pre>
+
+<pre><code class="r">1/exp(fit$coeff[&quot;Temp&quot;]) - 1
+</code></pre>
+
+<pre><code>##   Temp 
+## 0.1225
+</code></pre>
+
+<p>Note: could use binary variable that indicates damage of a least one O-ring (Damage_bin = 1 when Damage &gt;=1, 0 otherwise). However, we would be losing information regarding the number of O-rings that were damaged out of the total 6 O-rings, meaning we will not be differentiating a temperature that had more than one O-ring failure vs a temperature that had only one O-ring failure. Thus, the number of O-rings that were damaged and the number of O-rings that did not get damaged are used as inputs to the model. All answers in this section refer to fit1 (using number of successes and failures). Results from fit2 (using binary) are shown in the summary above. Interpretations for fit2 would be the same except that we would be referring to  the probability of at least one O-ring failure.</p>
+
+<p>For this problem, we are modeling the probability of an O-ring failure (i.e. damaged)</p>
+
+<p>The intercept is just the expected log odds of an O-ring failure (versus no failure) when the temperature is zero degrees Farenheight. So here the expected log odds is 5.085, or the odds is 161.5763 when the temperature is 0 F. The model indicates that intercept is also significant at 0.05 level. </p>
+
+<p>The coefficients of the predictor variables indicate the expected change in the log odds of the outcome for a one-unit increase in the predictor variable. So in this example, the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected change in the log odds of an O-ring failure (versus no failure) is -0.1156 (or decrease 0.1156). Equivalently, for every one-unit decrease in the temperature (a degree Fahrenheit), the log odds of an O-ring failure (versus no failure) increases by 0.1156. Because the coefficient is negative, the probability of an O-ring failure is higher at lower temperatures. The Wald statistic and p-value &lt; 0.05 indicates the effect of temperature on o-ring damage is significant.</p>
+
+<p>A more intuitive intepretation is that the exponential of the coefficient of the predictor variables is the multiplicative factor by which the odds of the outcome is expected to change given a one-unit increase in the  predictor variable. So in this example,  the exponential of the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected odds of an O-ring failure (versus no failure) changes by a factor of 0.8908 (or decrease of 10.917 %). In other words, the odds of an O-ring failure (versus no failure) is expected to decrease by 10.917 % for each one-unit increase in the temperature (a degree Fahrenheit). Equivalently, for each one-unit decrease in the temperature (a degree Fahrenheit), the expected odds are multiplied by 1.1225 (or increase by 12.2548 %)</p>
+
+<p>Alternatively, the exponential of the coefficient of the predictor variables is the odds ratio (odds if corresponding variable is increamented by 1 over odds if variable not incremented). Thus, the odds ratio is 0.8908 for a one-unit increase in the temperature (a degree Fahrenheit), meaning the probability of an O-ring failure (versus no failure) equals 1 is 0.8908 as likely as the value of the temperature is increased one unit (one degree Fahrenhiet). Equivalently, the  probability of an O-ring failure (versus no failure) equals 1 is 1.1225 as likely as the value of the temperature is decreased one unit (one degree Fahrenhiet).</p>
+
+<h2>Part b</h2>
+
+<pre><code class="r">
+# remove obs 18
+mydata = subset(mydata, as.numeric(rownames(mydata)) != 18)
+mydata
+</code></pre>
+
+<pre><code>##    Damaged_bin Damaged Temp
+## 1            1       2   53
+## 2            1       1   57
+## 3            1       1   58
+## 4            1       1   63
+## 5            0       0   66
+## 6            0       0   67
+## 7            0       0   67
+## 8            0       0   67
+## 9            0       0   68
+## 10           0       0   69
+## 11           0       0   70
+## 12           0       0   70
+## 13           1       1   70
+## 14           1       1   70
+## 15           0       0   72
+## 16           0       0   73
+## 17           0       0   75
+## 19           0       0   76
+## 20           0       0   78
+## 21           0       0   79
+## 22           0       0   81
+## 23           0       0   76
+</code></pre>
+
+<pre><code class="r">
+# fit logistic
+fit = glm(cbind(Damaged, 6 - Damaged) ~ Temp, family = binomial(link = &quot;logit&quot;), 
+    data = mydata)
+fit2 = glm(Damaged_bin ~ Temp, family = binomial(link = &quot;logit&quot;), data = mydata)
+
+# Plot
+# http://www.shizukalab.com/toolkits/plotting-logistic-regression-in-r
+# http://www.harding.edu/fmccown/r/ Legend
+# http://www.statmethods.net/advgraphs/axes.html
+
+temps = seq(30, 80, 1)
+
+plot(mydata$Temp, mydata$Damaged_bin, pch = 16, xlab = &quot;Temperature (F)&quot;, ylab = &quot;Actual outcome and Predicted Probabilities&quot;, 
+    xlim = c(15, 85))
+
+curve(predict(fit, data.frame(Temp = x), type = &quot;resp&quot;), add = TRUE, col = &quot;Blue&quot;, 
+    lwd = 2)
+points(mydata$Temp, predict(fit, data.frame(Temp = mydata$Temp), type = &quot;resp&quot;), 
+    pch = 16, col = &quot;Blue&quot;)
+
+curve(predict(fit2, data.frame(Temp = x), type = &quot;resp&quot;), add = TRUE, col = &quot;Red&quot;, 
+    lwd = 2)
+points(mydata$Temp, predict(fit2, data.frame(Temp = mydata$Temp), type = &quot;resp&quot;), 
+    pch = 16, col = &quot;Red&quot;)
+
+legend(&quot;bottomleft&quot;, inset = 0.05, c(&quot;Fit1&quot;, &quot;Fit2&quot;), col = c(&quot;Blue&quot;, &quot;Red&quot;), 
+    lty = 1)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAjVBMVEX9/v0AAAAAADkAAGUAAP8AOTkAOWUAOY8AZrU5AAA5ADk5AGU5OWU5OY85j485j9plAABlADllAGVlOQBlOY9lZjlltf2POQCPOTmPOWWPZgCPjzmPj2WPtY+P29qP2/21ZgC1tWW124+1/rW1/v3ajzna24/a/rXa/v39tWX924/9/rX9/tr9/v3/AADLNjtsAAAAL3RSTlP///////////////////////////////////////////////////////////8A/+SDKggAAAAJcEhZcwAACxIAAAsSAdLdfvwAABHZSURBVHic7Z0NW+O4FUZrZlqgs1PY2TZMu22hXdKdhJj///Nq2U5wYtnRp32v3vc87MKQ6Nrk+Eryh6Q/1ASSP6y9A2QdKB4UigeF4kGheFAoHhSKB4XiQaF4UCgeFIoHheJBoXhQKB4UigeF4kGheFAoHhSKB4XiQaF4UCgeFIoHheJBoXhQKB4UigeF4kGheFAoHhSKB4XiQaF4UCgeFIoHheJBoXhQKB4UigeF4kGheFAoHhSKB4XiQaF4UCgeFIoHheJBoXhQKB4UigeF4kGheFAoHhSKB4XiQaF4UCgelBjxFZFMRvERZUluKB4UigeF4kGheFCixe/v2z7ip1ff0GRVYsUfnjbt993tD8/QZFVixb99ez377h6arAozHpToNv7tkW28RtirD8R+0bP77cwF0avXSr3eFsGC4t8l4/3HWS93d7+duRTucJXc420xpBI/6NxN3AZYW20w9s+N4l1Df54hYitp8D4IKN479NwBIOEYuGRCPtv40NAD1B0E3Y9r700UIsQP0CNfufnoK3ePfU9ufCIfXVmJ9V+C+eiMPzw9hIV2Q6p89erjq/q3n5+DQnshT76Rrlm9tDZ+Bnnya8XqFYk3yJOvVb0y8QZp8nWqVyjeIMq8SvVKxRukqV97H/xQLL4WVeNrM69ZvCz1yszrFm8Qo16Xef3i5ahXZb4E8WLUU7xL6LTIUK+oc1+KeBnqFZ3QlyNewok9xTuEzsHa6ineIXQWJJhfc/vuFCa+Vb/Kdk8oMV+ceAlJv+bmXSlPvATzCtwXKH519SrMFyl+ZfMUvyJrmqf4NVnZ/GrbdqVY8eue18k3X674lXN+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" alt="plot of chunk unnamed-chunk-2"/> </p>
+
+<pre><code class="r">
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = cbind(Damaged, 6 - Damaged) ~ Temp, family = binomial(link = &quot;logit&quot;), 
+##     data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -0.761  -0.574  -0.332  -0.186   1.520  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)   8.6616     3.6344    2.38   0.0172 * 
+## Temp         -0.1768     0.0587   -3.01   0.0026 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 20.0667  on 21  degrees of freedom
+## Residual deviance:  9.4096  on 20  degrees of freedom
+## AIC: 24.75
+## 
+## Number of Fisher Scoring iterations: 6
+</code></pre>
+
+<pre><code class="r">summary(fit2)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Damaged_bin ~ Temp, family = binomial(link = &quot;logit&quot;), 
+##     data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.003  -0.608  -0.206   0.106   2.006  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)   23.403     11.832    1.98    0.048 *
+## Temp          -0.361      0.176   -2.06    0.040 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 25.782  on 21  degrees of freedom
+## Residual deviance: 14.377  on 20  degrees of freedom
+## AIC: 18.38
+## 
+## Number of Fisher Scoring iterations: 6
+</code></pre>
+
+<pre><code class="r">
+fit$coeff[&quot;(Intercept)&quot;]
+</code></pre>
+
+<pre><code>## (Intercept) 
+##       8.662
+</code></pre>
+
+<pre><code class="r">exp(fit$coeff[&quot;(Intercept)&quot;])
+</code></pre>
+
+<pre><code>## (Intercept) 
+##        5777
+</code></pre>
+
+<pre><code class="r">
+fit$coeff[&quot;Temp&quot;]
+</code></pre>
+
+<pre><code>##    Temp 
+## -0.1768
+</code></pre>
+
+<pre><code class="r">exp(fit$coeff[&quot;Temp&quot;])
+</code></pre>
+
+<pre><code>##   Temp 
+## 0.8379
+</code></pre>
+
+<pre><code class="r">1 - exp(fit$coeff[&quot;Temp&quot;])
+</code></pre>
+
+<pre><code>##   Temp 
+## 0.1621
+</code></pre>
+
+<pre><code class="r">
+1/exp(fit$coeff[&quot;Temp&quot;])
+</code></pre>
+
+<pre><code>##  Temp 
+## 1.193
+</code></pre>
+
+<pre><code class="r">1/exp(fit$coeff[&quot;Temp&quot;]) - 1
+</code></pre>
+
+<pre><code>##   Temp 
+## 0.1934
+</code></pre>
+
+<p>Note: could use binary variable that indicates damage of a least one O-ring (Damage_bin = 1 when Damage &gt;=1, 0 otherwise). However, we would be losing information regarding the number of O-rings that were damaged out of the total 6 O-rings, meaning we will not be differentiating a temperature that had more than one O-ring failure vs a temperature that had only one O-ring failure. Thus, the number of O-rings that were damaged and the number of O-rings that did not get damaged are used as inputs to the model. All answers in this section refer to fit1 (using number of successes and failures). Results from fit2 (using binary) are shown in the summary above. Interpretations for fit2 would be the same except that we would be referring to  the probability of at least one O-ring failure.</p>
+
+<p>For this problem, we are modeling the probability of an O-ring failure (i.e. damaged)</p>
+
+<p>The intercept is just the expected log odds of an O-ring failure (versus no failure) when the temperature is zero degrees Farenheight. So here the expected log odds is 8.6616, or the odds is 5776.5778 when the temperature is 0 F. The model indicates that intercept is also significant at 0.05 level. </p>
+
+<p>The coefficients of the predictor variables indicate the expected change in the log odds of the outcome for a one-unit increase in the predictor variable. So in this example, the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected change in the log odds of an O-ring failure (versus no failure) is -0.1768 (or decrease 0.1768). Equivalently, for every one-unit decrease in the temperature (a degree Fahrenheit), the log odds of an O-ring failure (versus no failure) increases by 0.1768. Because the coefficient is negative, the probability of an O-ring failure is higher at lower temperatures. The Wald statistic and p-value &lt; 0.05 indicates the effect of temperature on o-ring damage is significant.</p>
+
+<p>A more intuitive intepretation is that the exponential of the coefficient of the predictor variables is the multiplicative factor by which the odds of the outcome is expected to change given a one-unit increase in the  predictor variable. So in this example,  the exponential of the coefficient of temperature indicates that for every one-unit increase in the temperature (a degree Fahrenheit), the expected odds of an O-ring failure (versus no failure) changes by a factor of 0.8379 (or decrease of 16.2057 %). In other words, the odds of an O-ring failure (versus no failure) is expected to decrease by 16.2057 % for each one-unit increase in the temperature (a degree Fahrenheit). Equivalently, for each one-unit decrease in the temperature (a degree Fahrenheit), the expected odds are multiplied by 1.1934 (or increase by 19.3398 %)</p>
+
+<p>Alternatively, the exponential of the coefficient of the predictor variables is the odds ratio (odds if corresponding variable is increamented by 1 over odds if variable not incremented). Thus, the odds ratio is 0.8379 for a one-unit increase in the temperature (a degree Fahrenheit), meaning the probability of an O-ring failure (versus no failure) equals 1 is 0.8379 as likely as the value of the temperature is increased one unit (one degree Fahrenhiet). Equivalently, the  probability of an O-ring failure (versus no failure) equals 1 is 1.1934 as likely as the value of the temperature is decreased one unit (one degree Fahrenhiet).</p>
+
+<h2>Part c</h2>
+
+<pre><code class="r">prob = predict(fit, data.frame(Temp = 31), type = &quot;resp&quot;)  # resp -&gt; converts to probabilities
+signif(prob, 6)
+</code></pre>
+
+<pre><code>##      1 
+## 0.9601
+</code></pre>
+
+<pre><code class="r">sprintf(&quot;%.6f&quot;, prob)
+</code></pre>
+
+<pre><code>## [1] &quot;0.960098&quot;
+</code></pre>
+
+<pre><code class="r">
+prob2 = predict(fit2, data.frame(Temp = 31), type = &quot;resp&quot;)  # resp -&gt; converts to probabilities
+signif(prob2, 6)
+</code></pre>
+
+<pre><code>## 1 
+## 1
+</code></pre>
+
+<pre><code class="r">sprintf(&quot;%.6f&quot;, prob2)
+</code></pre>
+
+<pre><code>## [1] &quot;0.999995&quot;
+</code></pre>
+
+<p>The probability of an O-ring failure when temperature is 31 degree F is 0.960098. Using the binary fit, the probabilty of at least one O-ring failure is 0.999995.</p>
+
+<h2>Part d</h2>
+
+<p>It is NOT advisable to launch on that particular day because the probability of an O-ring failure is very high, meaning it is extremely likely that an O-ring will fail on that day given the temperature of 31 degree F. The probability that at least one of the O-ring (out of the 6) would fail is almost 1 (using the binary fit, or 1 ~ P(at least one out of six will fail) = 1 - P(None of the six wil fail), where P(None of the six will fail) = (1-P(O-ring failure))<sup>6</sup> and P(O-ring failure) = 0.960098). Note that the probability that all six O-rings will fail is also high at 78.3239 % (P(all six fail)= P(O-ring failure)<sup>6</sup> , where P(O-ring failure)=0.960098).</p>
+
+<p>However, the 31 degree F is outside the range of the predicted range of the model. So caution should be taken when making decisions based on the model. </p>
+
+<h1>Problem 2</h1>
+
+<pre><code class="r">
+# Import data
+filename = &quot;P357.txt&quot;
+mydata = read.table(filename, header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+</code></pre>
+
+<h2>Part a</h2>
+
+<pre><code class="r">#
+# http://stats.stackexchange.com/questions/26762/how-to-do-logistic-regression-in-r-when-outcome-is-fractional
+# http://www.stat.ufl.edu/~presnell/Courses/sta4504-2000sp/R/R-CDA.pdf
+
+mydataNFL = subset(mydata, League == &quot;NFL&quot;)
+mydataAFL = subset(mydata, League == &quot;AFL&quot;)
+
+# input as Success, Failures
+fitNFL = glm(cbind(Success, Attempts - Success) ~ Distance + I(Distance^2), 
+    family = binomial(link = &quot;logit&quot;), data = mydataNFL)
+fitAFL = glm(cbind(Success, Attempts - Success) ~ Distance + I(Distance^2), 
+    family = binomial(link = &quot;logit&quot;), data = mydataAFL)
+
+# Other option: input as Success/Total fitNFL = glm(Success/Attempts ~
+# Distance + I(Distance^2), weights= Attempts,
+# family=binomial(link=&#39;logit&#39;), data=mydataNFL)
+
+summary(fitNFL)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = cbind(Success, Attempts - Success) ~ Distance + 
+##     I(Distance^2), family = binomial(link = &quot;logit&quot;), data = mydataNFL)
+## 
+## Deviance Residuals: 
+##       1        2        3        4        5  
+##  0.1163  -0.0005  -0.4017   0.6421  -0.9146  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)    2.49020    1.01862    2.44    0.014 *
+## Distance      -0.01317    0.06599   -0.20    0.842  
+## I(Distance^2) -0.00151    0.00101   -1.50    0.134  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 147.7816  on 4  degrees of freedom
+## Residual deviance:   1.4238  on 2  degrees of freedom
+## AIC: 28.89
+## 
+## Number of Fisher Scoring iterations: 4
+</code></pre>
+
+<pre><code class="r">summary(fitAFL)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = cbind(Success, Attempts - Success) ~ Distance + 
+##     I(Distance^2), family = binomial(link = &quot;logit&quot;), data = mydataAFL)
+## 
+## Deviance Residuals: 
+##      6       7       8       9      10  
+##  0.319  -0.683   0.772  -0.523   0.285  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     4.8925     1.1893    4.11  3.9e-05 ***
+## Distance       -0.1971     0.0743   -2.65    0.008 ** 
+## I(Distance^2)   0.0016     0.0011    1.46    0.144    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 78.7794  on 4  degrees of freedom
+## Residual deviance:  1.5192  on 2  degrees of freedom
+## AIC: 28.44
+## 
+## Number of Fisher Scoring iterations: 3
+</code></pre>
+
+<h2>Part b</h2>
+
+<pre><code class="r">
+fit = glm(cbind(Success, Attempts - Success) ~ Distance + I(Distance^2) + Z, 
+    family = binomial(link = &quot;logit&quot;), data = mydata)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = cbind(Success, Attempts - Success) ~ Distance + 
+##     I(Distance^2) + Z, family = binomial(link = &quot;logit&quot;), data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.863  -0.201   0.033   0.555   1.601  
+## 
+## Coefficients:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    3.524184   0.774783    4.55  5.4e-06 ***
+## Distance      -0.095871   0.049021   -1.96     0.05 .  
+## I(Distance^2) -0.000109   0.000737   -0.15     0.88    
+## Z              0.103753   0.169831    0.61     0.54    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 228.5180  on 9  degrees of freedom
+## Residual deviance:   8.9776  on 6  degrees of freedom
+## AIC: 59.37
+## 
+## Number of Fisher Scoring iterations: 4
+</code></pre>
+
+<h2>Part c</h2>
+
+<pre><code class="r">pvalue = summary(fit)$coef[&quot;I(Distance^2)&quot;, &quot;Pr(&gt;|z|)&quot;]
+pvalue
+</code></pre>
+
+<pre><code>## [1] 0.8828
+</code></pre>
+
+<p>The p-value for the quadratic term is 0.8828 &gt; 0.05, which indicates that the quadratic term is insignificant (cannot reject Ho that the coefficient is equal to zero given other variables in the model) and thus does NOT contribute significantly to the model.</p>
+
+<h2>Part d</h2>
+
+<pre><code class="r">pvalue = summary(fit)$coef[&quot;Z&quot;, &quot;Pr(&gt;|z|)&quot;]
+pvalue
+</code></pre>
+
+<pre><code>## [1] 0.5413
+</code></pre>
+
+<pre><code class="r">
+fit2 = update(fit, . ~ . - I(Distance^2))
+summary(fit2)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = cbind(Success, Attempts - Success) ~ Distance + 
+##     Z, family = binomial(link = &quot;logit&quot;), data = mydata)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.9179  -0.2547   0.0509   0.5778   1.5465  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   3.6296     0.3031   11.97   &lt;2e-16 ***
+## Distance     -0.1030     0.0081  -12.71   &lt;2e-16 ***
+## Z             0.1036     0.1698    0.61     0.54    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 228.5180  on 9  degrees of freedom
+## Residual deviance:   8.9993  on 7  degrees of freedom
+## AIC: 57.39
+## 
+## Number of Fisher Scoring iterations: 4
+</code></pre>
+
+<pre><code class="r">pvalue2 = summary(fit)$coef[&quot;Z&quot;, &quot;Pr(&gt;|z|)&quot;]
+pvalue2
+</code></pre>
+
+<pre><code>## [1] 0.5413
+</code></pre>
+
+<pre><code class="r">
+# odds ratios and 95% CI
+exp(cbind(OR = coef(fit), confint(fit)))
+</code></pre>
+
+<pre><code>## Waiting for profiling to be done...
+</code></pre>
+
+<pre><code>##                    OR  2.5 %   97.5 %
+## (Intercept)   33.9261 7.7771 163.5667
+## Distance       0.9086 0.8239   0.9989
+## I(Distance^2)  0.9999 0.9985   1.0013
+## Z              1.1093 0.7951   1.5481
+</code></pre>
+
+<p>The p-value for the Z term is 0.5413 &gt; 0.05, which indicates that the Z term (league indicator) is insignificant (cannot reject Ho that the coefficient is equal to zero given other variables in the model) and thus does NOT contribute significantly to the model. In other words, because the effect of the leauge is insignificant after taking into account distance and distance<sup>2,</sup> then the probabilities of scoring field goals from a given distance and distance<sup>2</sup> are NOT statistically different for each league (i.e. probabilities are the same for each league). </p>
+
+<p>Removing the insignificant quadratic term, the p-value for the Z term is 0.5413 &gt; 0.05, which indicates that the Z term (league indicator) is insignificant (cannot reject Ho that the coefficient is equal to zero given other variables in the model) and thus does NOT contribute significantly to the model. In other words, because the effect of the leauge is insignificant after taking into account distance , then the probabilities of scoring field goals from a given distance are NOT statistically different for each league (i.e. probabilities are the same for each league). Note that also the 95% CI of odds ratio of scoring field goals in a given distance for the AFL vs NFL contains 1, suggesting that the odds ratio is not significantly different than one, meaning the odds of scoring given a distance for AFL vs NFL are not statistically different. </p>
+
+<h1>Problem 3</h1>
+
+<pre><code class="r">
+# Import data
+filename = &quot;P014.txt&quot;
+mydata = read.table(filename, header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+
+n = dim(mydata)[1]
+</code></pre>
+
+<h2>Part a</h2>
+
+<pre><code class="r">
+# remove NETREV , since NETREV = PCREV - FEXP
+fit = glm(RURAL ~ . - NETREV, family = binomial(link = &quot;logit&quot;), data = mydata)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = RURAL ~ . - NETREV, family = binomial(link = &quot;logit&quot;), 
+##     data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.035  -0.610   0.480   0.753   1.417  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)  3.74e+00   1.38e+00    2.71   0.0067 **
+## BED         -3.18e-02   2.83e-02   -1.12   0.2607   
+## MCDAYS       1.59e-02   9.32e-03    1.70   0.0891 . 
+## TDAYS       -6.69e-03   9.40e-03   -0.71   0.4764   
+## PCREV        5.29e-05   1.26e-04    0.42   0.6751   
+## NSAL        -7.15e-04   3.28e-04   -2.18   0.0295 * 
+## FEXP         2.93e-04   2.63e-04    1.12   0.2647   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 67.083  on 51  degrees of freedom
+## Residual deviance: 48.809  on 45  degrees of freedom
+## AIC: 62.81
+## 
+## Number of Fisher Scoring iterations: 5
+</code></pre>
+
+<pre><code class="r">
+# Asssess model fit ####
+logLik(fit)
+</code></pre>
+
+<pre><code>## &#39;log Lik.&#39; -24.4 (df=7)
+</code></pre>
+
+<pre><code class="r">deviance(fit)  # -2*logLik(fit)
+</code></pre>
+
+<pre><code>## [1] 48.81
+</code></pre>
+
+<pre><code class="r">fit$deviance
+</code></pre>
+
+<pre><code>## [1] 48.81
+</code></pre>
+
+<pre><code class="r">fit$null.deviance
+</code></pre>
+
+<pre><code>## [1] 67.08
+</code></pre>
+
+<pre><code class="r">G2 = fit$null.deviance - deviance(fit)
+G2
+</code></pre>
+
+<pre><code>## [1] 18.27
+</code></pre>
+
+<pre><code class="r">
+pvalue = 1 - pchisq(fit$null.deviance - deviance(fit), 6)
+pvalue
+</code></pre>
+
+<pre><code>## [1] 0.005581
+</code></pre>
+
+<pre><code class="r">q_crit = qchisq(p = 0.95, df = 6)
+G2 &gt; q_crit
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">
+# Null deviance = left unexplained after fittings beta&#39;s Bigger difference
+# -&gt; more explained How much addtw two predictors explain = 79
+
+# 6 = 6 constraints H0: beta 1 = beta 2 ...beta 6
+fit0 = glm(RURAL ~ 1, family = binomial(link = &quot;logit&quot;), data = mydata)
+anova(fit0, fit, test = &quot;Chisq&quot;)
+</code></pre>
+
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: RURAL ~ 1
+## Model 2: RURAL ~ (BED + MCDAYS + TDAYS + PCREV + NSAL + FEXP + NETREV) - 
+##     NETREV
+##   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)   
+## 1        51       67.1                        
+## 2        45       48.8  6     18.3   0.0056 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+<p>The overall goodness of fit G<sup>2</sup> = 18.2748 &gt; \(  \chi \ 2  \)(0.05, 6) = 12.5916 (pvalue = 0.0056 &lt; 0.05 ), so the null hypothesis that the coefficients of the predictors are zero is rejected at a 0.05 level. At least one of the predictors has an statistically significant effect on the response variable (probability rural vs non-rural), suggesting that rural vs non-rural facilities differ on at least one of the characteristics.</p>
+
+<pre><code class="r">
+# Find best model using AIC and BIC criteria
+fitAIC = step(fit, direction=&#39;both&#39;)
+</code></pre>
+
+<pre><code>## Start:  AIC=62.81
+## RURAL ~ (BED + MCDAYS + TDAYS + PCREV + NSAL + FEXP + NETREV) - 
+##     NETREV
+## 
+##          Df Deviance  AIC
+## - PCREV   1     49.0 61.0
+## - TDAYS   1     49.3 61.3
+## - FEXP    1     50.2 62.2
+## - BED     1     50.3 62.3
+## &lt;none&gt;          48.8 62.8
+## - MCDAYS  1     52.1 64.1
+## - NSAL    1     54.8 66.8
+## 
+## Step:  AIC=60.99
+## RURAL ~ BED + MCDAYS + TDAYS + NSAL + FEXP
+## 
+##          Df Deviance  AIC
+## - TDAYS   1     49.4 59.4
+## - BED     1     50.3 60.3
+## - FEXP    1     50.5 60.5
+## &lt;none&gt;          49.0 61.0
+## - MCDAYS  1     52.5 62.5
+## + PCREV   1     48.8 62.8
+## - NSAL    1     54.8 64.8
+## 
+## Step:  AIC=59.36
+## RURAL ~ BED + MCDAYS + NSAL + FEXP
+## 
+##          Df Deviance  AIC
+## &lt;none&gt;          49.4 59.4
+## - FEXP    1     51.4 59.4
+## - BED     1     52.9 60.9
+## + TDAYS   1     49.0 61.0
+## + PCREV   1     49.3 61.3
+## - MCDAYS  1     53.5 61.5
+## - NSAL    1     57.0 65.0
+</code></pre>
+
+<pre><code class="r">fitBIC = step(fit, direction=&#39;both&#39;, k=log(n))
+</code></pre>
+
+<pre><code>## Start:  AIC=76.47
+## RURAL ~ (BED + MCDAYS + TDAYS + PCREV + NSAL + FEXP + NETREV) - 
+##     NETREV
+## 
+##          Df Deviance  AIC
+## - PCREV   1     49.0 72.7
+## - TDAYS   1     49.3 73.0
+## - FEXP    1     50.2 73.9
+## - BED     1     50.3 74.0
+## - MCDAYS  1     52.1 75.8
+## &lt;none&gt;          48.8 76.5
+## - NSAL    1     54.8 78.5
+## 
+## Step:  AIC=72.69
+## RURAL ~ BED + MCDAYS + TDAYS + NSAL + FEXP
+## 
+##          Df Deviance  AIC
+## - TDAYS   1     49.4 69.1
+## - BED     1     50.3 70.0
+## - FEXP    1     50.5 70.2
+## - MCDAYS  1     52.5 72.2
+## &lt;none&gt;          49.0 72.7
+## - NSAL    1     54.8 74.5
+## + PCREV   1     48.8 76.5
+## 
+## Step:  AIC=69.11
+## RURAL ~ BED + MCDAYS + NSAL + FEXP
+## 
+##          Df Deviance  AIC
+## - FEXP    1     51.4 67.2
+## - BED     1     52.9 68.7
+## &lt;none&gt;          49.4 69.1
+## - MCDAYS  1     53.5 69.3
+## + TDAYS   1     49.0 72.7
+## - NSAL    1     57.0 72.8
+## + PCREV   1     49.3 73.0
+## 
+## Step:  AIC=67.24
+## RURAL ~ BED + MCDAYS + NSAL
+## 
+##          Df Deviance  AIC
+## - BED     1     53.4 65.3
+## - MCDAYS  1     54.9 66.7
+## &lt;none&gt;          51.4 67.2
+## - NSAL    1     57.1 69.0
+## + FEXP    1     49.4 69.1
+## + TDAYS   1     50.5 70.2
+## + PCREV   1     51.4 71.2
+## 
+## Step:  AIC=65.3
+## RURAL ~ MCDAYS + NSAL
+## 
+##          Df Deviance  AIC
+## - MCDAYS  1     55.4 63.3
+## &lt;none&gt;          53.4 65.3
+## + TDAYS   1     50.9 66.7
+## + BED     1     51.4 67.2
+## + FEXP    1     52.9 68.7
+## + PCREV   1     53.0 68.8
+## - NSAL    1     67.1 75.0
+## 
+## Step:  AIC=63.33
+## RURAL ~ NSAL
+## 
+##          Df Deviance  AIC
+## &lt;none&gt;          55.4 63.3
+## + MCDAYS  1     53.4 65.3
+## + FEXP    1     54.7 66.5
+## + BED     1     54.9 66.7
+## + PCREV   1     55.4 67.2
+## + TDAYS   1     55.4 67.3
+## - NSAL    1     67.1 71.0
+</code></pre>
+
+<pre><code class="r">summary(fitAIC)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = RURAL ~ BED + MCDAYS + NSAL + FEXP, family = binomial(link = &quot;logit&quot;), 
+##     data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.999  -0.589   0.453   0.734   1.439  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)  3.644271   1.312794    2.78   0.0055 **
+## BED         -0.036640   0.022469   -1.63   0.1030   
+## MCDAYS       0.012620   0.007088    1.78   0.0750 . 
+## NSAL        -0.000753   0.000317   -2.38   0.0174 * 
+## FEXP         0.000344   0.000254    1.35   0.1755   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 67.083  on 51  degrees of freedom
+## Residual deviance: 49.358  on 47  degrees of freedom
+## AIC: 59.36
+## 
+## Number of Fisher Scoring iterations: 5
+</code></pre>
+
+<pre><code class="r">summary(fitBIC)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = RURAL ~ NSAL, family = binomial(link = &quot;logit&quot;), 
+##     data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.066  -0.833   0.518   0.842   1.499  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  3.312614   0.969533    3.42  0.00063 ***
+## NSAL        -0.000667   0.000220   -3.03  0.00246 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 67.083  on 51  degrees of freedom
+## Residual deviance: 55.424  on 50  degrees of freedom
+## AIC: 59.42
+## 
+## Number of Fisher Scoring iterations: 4
+</code></pre>
+
+<pre><code class="r">
+
+mydata2 = within(mydata,{
+  NETREV = NULL
+})
+
+mydata2 = cbind(mydata2[,-1],RURAL = mydata2[,1])
+head(mydata2)
+</code></pre>
+
+<pre><code>##   BED MCDAYS TDAYS PCREV NSAL FEXP RURAL
+## 1 244    128   385 23521 5230 5334     0
+## 2  59    155   203  9160 2459  493     1
+## 3 120    281   392 21900 6304 6115     0
+## 4 120    291   419 22354 6590 6346     0
+## 5 120    238   363 17421 5362 6225     0
+## 6  65    180   234 10531 3622  449     1
+</code></pre>
+
+<pre><code class="r">
+# http://rstudio-pubs-static.s3.amazonaws.com/2897_9220b21cfc0c43a396ff9abf122bb351.html
+# install.packages(&quot;bestglm&quot;)
+# http://www2.uaem.mx/r-mirror/web/packages/bestglm/vignettes/bestglm.pdf
+library(bestglm)
+best_glm = bestglm(Xy = mydata2, IC = &quot;AIC&quot;,family=binomial, method=&quot;exhaustive&quot;)
+</code></pre>
+
+<pre><code>## Morgan-Tatar search since family is non-gaussian.
+</code></pre>
+
+<pre><code class="r">names(best_glm)
+</code></pre>
+
+<pre><code>## [1] &quot;BestModel&quot;   &quot;BestModels&quot;  &quot;Bestq&quot;       &quot;qTable&quot;      &quot;Subsets&quot;    
+## [6] &quot;Title&quot;       &quot;ModelReport&quot;
+</code></pre>
+
+<pre><code class="r">best_glm$BestModel
+</code></pre>
+
+<pre><code>## 
+## Call:  glm(formula = y ~ ., family = family, data = Xi, weights = weights)
+## 
+## Coefficients:
+## (Intercept)       MCDAYS        TDAYS         NSAL  
+##    3.035510     0.016095    -0.011539    -0.000527  
+## 
+## Degrees of Freedom: 51 Total (i.e. Null);  48 Residual
+## Null Deviance:       67.1 
+## Residual Deviance: 50.9  AIC: 58.9
+</code></pre>
+
+<pre><code class="r">best_glm$BestModels
+</code></pre>
+
+<pre><code>##     BED MCDAYS TDAYS PCREV NSAL  FEXP Criterion
+## 1 FALSE   TRUE  TRUE FALSE TRUE FALSE     56.86
+## 2  TRUE   TRUE FALSE FALSE TRUE  TRUE     57.36
+## 3 FALSE  FALSE FALSE FALSE TRUE FALSE     57.42
+## 4  TRUE   TRUE FALSE FALSE TRUE FALSE     57.44
+## 5 FALSE   TRUE FALSE FALSE TRUE FALSE     57.45
+</code></pre>
+
+<pre><code class="r">best_glm$Subsets
+</code></pre>
+
+<pre><code>##    Intercept   BED MCDAYS TDAYS PCREV  NSAL  FEXP logLikelihood   AIC
+## 0       TRUE FALSE  FALSE FALSE FALSE FALSE FALSE        -33.54 67.08
+## 1       TRUE FALSE  FALSE FALSE FALSE  TRUE FALSE        -27.71 57.42
+## 2       TRUE FALSE   TRUE FALSE FALSE  TRUE FALSE        -26.72 57.45
+## 3*      TRUE FALSE   TRUE  TRUE FALSE  TRUE FALSE        -25.43 56.86
+## 4       TRUE  TRUE   TRUE FALSE FALSE  TRUE  TRUE        -24.68 57.36
+## 5       TRUE  TRUE   TRUE  TRUE FALSE  TRUE  TRUE        -24.49 58.99
+## 6       TRUE  TRUE   TRUE  TRUE  TRUE  TRUE  TRUE        -24.40 60.81
+</code></pre>
+
+<pre><code class="r">
+best_glm = bestglm(Xy = mydata2, IC = &quot;BIC&quot;,family=binomial, method=&quot;exhaustive&quot;)
+</code></pre>
+
+<pre><code>## Morgan-Tatar search since family is non-gaussian.
+</code></pre>
+
+<pre><code class="r">names(best_glm)
+</code></pre>
+
+<pre><code>## [1] &quot;BestModel&quot;   &quot;BestModels&quot;  &quot;Bestq&quot;       &quot;qTable&quot;      &quot;Subsets&quot;    
+## [6] &quot;Title&quot;       &quot;ModelReport&quot;
+</code></pre>
+
+<pre><code class="r">best_glm$BestModel
+</code></pre>
+
+<pre><code>## 
+## Call:  glm(formula = y ~ ., family = family, data = Xi, weights = weights)
+## 
+## Coefficients:
+## (Intercept)         NSAL  
+##    3.312614    -0.000667  
+## 
+## Degrees of Freedom: 51 Total (i.e. Null);  50 Residual
+## Null Deviance:       67.1 
+## Residual Deviance: 55.4  AIC: 59.4
+</code></pre>
+
+<pre><code class="r">best_glm$BestModels
+</code></pre>
+
+<pre><code>##     BED MCDAYS TDAYS PCREV NSAL  FEXP Criterion
+## 1 FALSE  FALSE FALSE FALSE TRUE FALSE     59.38
+## 2 FALSE   TRUE FALSE FALSE TRUE FALSE     61.35
+## 3 FALSE  FALSE FALSE FALSE TRUE  TRUE     62.58
+## 4 FALSE   TRUE  TRUE FALSE TRUE FALSE     62.72
+## 5  TRUE  FALSE FALSE FALSE TRUE FALSE     62.76
+</code></pre>
+
+<pre><code class="r">best_glm$Subsets
+</code></pre>
+
+<pre><code>##    Intercept   BED MCDAYS TDAYS PCREV  NSAL  FEXP logLikelihood   BIC
+## 0       TRUE FALSE  FALSE FALSE FALSE FALSE FALSE        -33.54 67.08
+## 1*      TRUE FALSE  FALSE FALSE FALSE  TRUE FALSE        -27.71 59.38
+## 2       TRUE FALSE   TRUE FALSE FALSE  TRUE FALSE        -26.72 61.35
+## 3       TRUE FALSE   TRUE  TRUE FALSE  TRUE FALSE        -25.43 62.72
+## 4       TRUE  TRUE   TRUE FALSE FALSE  TRUE  TRUE        -24.68 65.16
+## 5       TRUE  TRUE   TRUE  TRUE FALSE  TRUE  TRUE        -24.49 68.74
+## 6       TRUE  TRUE   TRUE  TRUE  TRUE  TRUE  TRUE        -24.40 72.52
+</code></pre>
+
+<pre><code class="r">
+# best_glm = bestglm(Xy = mydata2, IC = &quot;BICg&quot;,family=binomial, method=&quot;exhaustive&quot;)
+# names(best_glm)
+# best_glm$BestModel
+# best_glm$Subsets
+# 
+# best_glm = bestglm(Xy = mydata2, IC = &quot;BICq&quot;,family=binomial, method=&quot;exhaustive&quot;)
+# names(best_glm)
+# best_glm$BestModel
+# best_glm$Subsets
+
+best_glm = bestglm(Xy = mydata2, IC = &quot;CV&quot;,family=binomial, method=&quot;exhaustive&quot;)
+</code></pre>
+
+<pre><code>## Morgan-Tatar search since family is non-gaussian.
+</code></pre>
+
+<pre><code class="r">names(best_glm)
+</code></pre>
+
+<pre><code>## [1] &quot;BestModel&quot;   &quot;BestModels&quot;  &quot;Bestq&quot;       &quot;qTable&quot;      &quot;Subsets&quot;    
+## [6] &quot;Title&quot;       &quot;ModelReport&quot;
+</code></pre>
+
+<pre><code class="r">best_glm$BestModel
+</code></pre>
+
+<pre><code>## 
+## Call:  glm(formula = y ~ ., family = family, data = data.frame(Xy[, 
+##     c(bestset[-1], FALSE), drop = FALSE], y = y))
+## 
+## Coefficients:
+## (Intercept)         NSAL  
+##    3.312614    -0.000667  
+## 
+## Degrees of Freedom: 51 Total (i.e. Null);  50 Residual
+## Null Deviance:       67.1 
+## Residual Deviance: 55.4  AIC: 59.4
+</code></pre>
+
+<pre><code class="r">best_glm$BestModels
+</code></pre>
+
+<pre><code>##   BestModels
+## 1         NA
+</code></pre>
+
+<pre><code class="r">best_glm$Subsets
+</code></pre>
+
+<pre><code>##    Intercept   BED MCDAYS TDAYS PCREV  NSAL  FEXP logLikelihood     CV
+## 0       TRUE FALSE  FALSE FALSE FALSE FALSE FALSE        -33.54 0.2445
+## 1*      TRUE FALSE  FALSE FALSE FALSE  TRUE FALSE        -27.71 0.2079
+## 2       TRUE FALSE   TRUE FALSE FALSE  TRUE FALSE        -26.72 0.2211
+## 3       TRUE FALSE   TRUE  TRUE FALSE  TRUE FALSE        -25.43 0.2470
+## 4       TRUE  TRUE   TRUE FALSE FALSE  TRUE  TRUE        -24.68 0.2773
+## 5       TRUE  TRUE   TRUE  TRUE FALSE  TRUE  TRUE        -24.49 0.3185
+## 6       TRUE  TRUE   TRUE  TRUE  TRUE  TRUE  TRUE        -24.40 0.3518
+</code></pre>
+
+<pre><code class="r">
+# http://www.jstatsoft.org/v34/i12/paper
+# http://r.789695.n4.nabble.com/glmulti-fails-because-of-rJava-td4100391.html
+# http://www.dummies.com/how-to/content/how-to-install-and-configure-rstudio.html
+# Need to use 32 bit
+# install.packages(&quot;glmulti&quot;)
+library(glmulti)
+glmulti.logistic.out &lt;-
+    glmulti(RURAL~ ., data = mydata2,
+            level = 1,               # No interaction considered
+            method = &quot;h&quot;,            # Exhaustive approach
+            crit = &quot;aic&quot;,            # AIC as criteria
+            confsetsize = 5,         # Keep 5 best models
+            plotty = F, report = F,  # No plot or interim reports
+            fitfunction = &quot;glm&quot;,     # glm function
+            family = binomial)       # binomial family for logistic regression
+
+## Show 5 best models (Use @ instead of $ for an S4 object)
+glmulti.logistic.out@formulas
+</code></pre>
+
+<pre><code>## [[1]]
+## RURAL ~ 1 + MCDAYS + TDAYS + NSAL
+## &lt;environment: 0x04b4dfa0&gt;
+## 
+## [[2]]
+## RURAL ~ 1 + BED + MCDAYS + NSAL + FEXP
+## &lt;environment: 0x04b4dfa0&gt;
+## 
+## [[3]]
+## RURAL ~ 1 + NSAL
+## &lt;environment: 0x04b4dfa0&gt;
+## 
+## [[4]]
+## RURAL ~ 1 + BED + MCDAYS + NSAL
+## &lt;environment: 0x04b4dfa0&gt;
+## 
+## [[5]]
+## RURAL ~ 1 + MCDAYS + NSAL
+## &lt;environment: 0x04b4dfa0&gt;
+</code></pre>
+
+<pre><code class="r">summary(glmulti.logistic.out)
+</code></pre>
+
+<pre><code>## $name
+## [1] &quot;glmulti.analysis&quot;
+## 
+## $method
+## [1] &quot;h&quot;
+## 
+## $fitting
+## [1] &quot;glm&quot;
+## 
+## $crit
+## [1] &quot;aic&quot;
+## 
+## $level
+## [1] 1
+## 
+## $marginality
+## [1] FALSE
+## 
+## $confsetsize
+## [1] 5
+## 
+## $bestic
+## [1] 58.86
+## 
+## $icvalues
+## [1] 58.86 59.36 59.42 59.44 59.45
+## 
+## $bestmodel
+## [1] &quot;RURAL ~ 1 + MCDAYS + TDAYS + NSAL&quot;
+## 
+## $modelweights
+## [1] 0.2479 0.1935 0.1872 0.1861 0.1853
+## 
+## $includeobjects
+## [1] TRUE
+</code></pre>
+
+<pre><code class="r">
+
+plot(glmulti.logistic.out, type=&quot;p&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAh1BMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZrU5AAA5ADk5AGU5OWU5OY85ZrU5j9plAABlADllAGVlOQBlOY9lZjllZrVltf2POQCPOTmPOWWPj2WPtY+P27WP29qP2/21ZgC1ZmW1tWW1/rW1/v3ajzna24/a/rXa/v39tWX924/9/rX9/tr9/v3CEhDiAAAALXRSTlP//////////////////////////////////////////////////////////wCl7wv9AAAACXBIWXMAAAsSAAALEgHS3X78AAAK2klEQVR4nO3dD3va1hlA8crZDE0z3HQruN1qukUbf7//55uuhJ3YyI5k3Yu4Ouf39KkTTBQnx5KuCPD+cBTSD2N/ARqH4aEMD2V4KMNDGR7K8FCGhzI8lOGhDA9leCjDQxkeyvBQhocyPJThoQwPZXgow0MZHsrwUIaHMjwUKPz+7sOX8P+iKBbfuetuXtz8q7p780smiRZ+W9Rmb991XSy//pJpgoU/rMLeXhY3D+GWw+rDv4uiantY3fwj3FbWR4PqTkVx+7+nPT7cuhz7q48NFn43v92E4E3HunDVeNOk3qybo8GL8M2t3zs75AYWfvssYL3/Vyf9ZfWDWTizVzv9/q76XzjU70/h6++V6tgwsWM+PHxzJF9Uh/rq2L+tT/1lFf3b8KdVQXNymA5Y+JeHesMDNCWfL+6eDvXhhjcO9dMDC//8cu6bxV39nbB+/Ny34U+3Tq0+LfyzB3Cay7l67dYcAsrT556Fr8tPrTsp/LnprdW7MzyU4aHQ4ckMD2V4KMNDGR7K8FCGhzI8lOGhDA9leCjDQxkeyvBQhocyPJThoQwPZXgow0MNCV/omiUMP+DXKjXDQxkeyvBQhocyPJThoQwPZXgow0MZHuLlg7SGZzh7eN7wDIaHMjyV53jVDH8lvvvUiNi/39ufNvyFdHhSTOTf8O1PG/5CDA9leCrP8boIw0MZvqNLH4pTM3w3F198pWb4bgwfbdN5MXy0TWdmYt0jhd99bBnlMK2/qKkZGr6e2hScT/Ew/DUbvMfXI7jc47MT4VC/v7v9r+FzE+Ucv5u3jWsy/DVzVQ9leKhY4fefXdVnxT0eyvBQw8M389OXvTetUQ0Ov66S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" alt="plot of chunk unnamed-chunk-9"/> </p>
+
+<pre><code class="r">
+# ranked relative evidence weight of the models
+# They can be interpreted as probabilities for each model to be the best in the set
+# A red vertical line is shown where the cumulated evidence weight reaches 95%
+plot(glmulti.logistic.out, type = &quot;w&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAnFBMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZo8AZrU5AAA5ADk5AGU5OWU5OY85ZmU5ZrU5j485j9plAABlADllAGVlOQBlOY9lZjllZmVlZrVltbVltf2POQCPOTmPOWWPj2WPtY+P27WP29qP2/21ZgC1ZmW1tWW124+1/rW1/v3ajzna24/a/rXa/v39tWX924/9/rX9/tr9/v3/AADWDPFuAAAANHRSTlP//////////////////////////////////////////////////////////////////wD/9XEwmgAAAAlwSFlzAAALEgAACxIB0t1+/AAADOhJREFUeJztnQt74sYZRiM7dWETt4U4zQWcpLHarpUgQPv//1tmJIG5iIuGGZjhPefZXRt0geUwN2nm+76qQJKvbv0G4DYgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aKkKX4xziyTvQ3zYfbwn/Hj+8L8PXCs3eXtxNmfZhsPDp5pe9tyun6Q77+x6Eha/L7AvP0yHNGVd3xfds9+pvgtPsSffoUISFW8VZNno+X04QfrvzBfg5H57M2Ppz/XJb7YrBU2d7Fey+zv0+zxvWh2abZW9faf67O3B7fia62F2aV+6c1t5ojHz+ZJs8f/h+aE9SsMbMWSnfmVuQnJi6895nUFMNgR3zw7ag7Z2qURv2K966D5XtQ7rA5elfjCmM7NHqV5bnNbfcTXQyt+4xUGTZ20UXPERqri26refMoD22ybQr8Ym39sLbtoxc+NjXUFvL2LpczsLtnEPrneOh/WBftptj54JX4+HC3GP5oawu60sW19hHkro6reZF+h/iVmUhZvZJmq/s06NPbbMvkhvi3STUdge5fVM02RfXhbb61/sfXJ+uCV+MV4MP/026e3fOPEzau0R9Rvpa6KmjeRUdX7Z939ulh8I+wM8VX++D/Tlv88HlSHxJsd1+LrNv7U8OGW3IX4I1X9iq6q/kP8gaq+ealWfPnwg+lM/GO4UY3vVPVb4i0xd+/vQvy6b7Ylvn223XNrF8um+IOdu6fZWrypvEfGsH20uW2jc/chPhvUBT7muv4+xK9HY1vi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" alt="plot of chunk unnamed-chunk-9"/> </p>
+
+<pre><code class="r">
+# The third option plots for each term its estimated importance (or relative evidence weight), computed as the sum of the relative evidence weights of all models in which the term appears
+plot(glmulti.logistic.out, type = &quot;s&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAt1BMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZo8AZrU5AAA5ADk5AGU5OQA5OY85ZmU5Zo85ZrU5j485j9plAABlADllAGVlOQBlOTllOY9lZjllZmVlZrVlj49ltbVltdpltf2POQCPOTmPOWWPZo+Pj2WPtY+P27WP2/21ZgC1Zjm1tWW124+1/rW1/tq1/v2+vr7ajznaj2XatWXa24/a/rXa/tra/v39tWX924/9/rX9/tr9/v3/AADXJ9ifAAAAPXRSTlP//////////////////////////////////////////////////////////////////////////////wD/twm+oAAAAAlwSFlzAAALEgAACxIB0t1+/AAADR1JREFUeJzt3Yl228YZhuFASllSqpqWdFvHXUi5kcnaKYvWCbfx/V9XZwYLF9kWRGLkH/je9+RYIggOYTzEJh0H3zmS7LtvvQD0bQJeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRTMNv5tl2dh/zbNssDp+ajs5mLKdXC/beL9q0ObjLabPfpPNKLuan/vi9jIOf/U7TxH8XxS+cYvs+Xb1a855cXtZh//Rk24nvx8FEb/hxx1A+CD8fVJNmR7Cr/0Evz0tsqFzxZ/lLGEo/0z5fBji+ufDIQ4GLcZbZ7/18yzz8Oxudv0+y+J7lMsQh4sNq/fczxSGqmeucYtXhufipzh+c7p8Px28adg1ZO18oD+XdfiH0dSv2b8F+EW5ouMqi2uvmDLew28nxTPr8Ox2Ej8C2cEK/6V8Pj76fnQwxH5QV8FXXS9P37Fcht/8OXy/PRxzv3x+iaqxY+UrT+GPl+9/B29ajZto3VqHfzcZu/z6gzfajLxjwNyM/ErNszAlHgfCOjrYMsID/8K5Wx/O4lfscP/84yHqKdUs6yxMzKbhHf2Lw6crm9bLUA5X7a2L9/QzFe8Z0af12GGO+pXHu/qT5Tt80/hUuqzDzxeDX2eDj6OwFYdVnWfT+E04HJcb5dW8sMyKzTxubLlHCCu2niV+FJwrn388RD2lmKmYpfoMFXp+zHoZyuEKxGLMOKkYs9jI67GLB+Urj+FP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" alt="plot of chunk unnamed-chunk-9"/> </p>
+
+<pre><code class="r">
+# Use LRT forward
+add1(fit0,test=&quot;Chisq&quot;,scope=~BED+MCDAYS+TDAYS+PCREV+NSAL+FEXP,data=mydata2)
+</code></pre>
+
+<pre><code>## Single term additions
+## 
+## Model:
+## RURAL ~ 1
+##        Df Deviance  AIC   LRT Pr(&gt;Chi)    
+## &lt;none&gt;        67.1 69.1                   
+## BED     1     61.4 65.4  5.65  0.01746 *  
+## MCDAYS  1     67.1 71.1  0.01  0.91749    
+## TDAYS   1     63.7 67.7  3.40  0.06529 .  
+## PCREV   1     63.1 67.1  3.94  0.04721 *  
+## NSAL    1     55.4 59.4 11.66  0.00064 ***
+## FEXP    1     66.3 70.3  0.79  0.37412    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<pre><code class="r">fit1 = update(fit0,.~.+NSAL)
+add1(fit1,test=&quot;Chisq&quot;,scope=~BED+MCDAYS+TDAYS+PCREV+NSAL+FEXP,data=mydata2)
+</code></pre>
+
+<pre><code>## Single term additions
+## 
+## Model:
+## RURAL ~ NSAL
+##        Df Deviance  AIC   LRT Pr(&gt;Chi)
+## &lt;none&gt;        55.4 59.4               
+## BED     1     54.9 60.9 0.563     0.45
+## MCDAYS  1     53.4 59.4 1.979     0.16
+## TDAYS   1     55.4 61.4 0.000     0.99
+## PCREV   1     55.4 61.4 0.031     0.86
+## FEXP    1     54.7 60.7 0.749     0.39
+</code></pre>
+
+<pre><code class="r"># Don&#39;t add anything else, model is RURAL~NSAL
+
+# Use LRT backward
+drop1(fit,test=&quot;Chisq&quot;,data=mydata2)
+</code></pre>
+
+<pre><code>## Single term deletions
+## 
+## Model:
+## RURAL ~ (BED + MCDAYS + TDAYS + PCREV + NSAL + FEXP + NETREV) - 
+##     NETREV
+##        Df Deviance  AIC  LRT Pr(&gt;Chi)  
+## &lt;none&gt;        48.8 62.8                
+## BED     1     50.3 62.3 1.47    0.226  
+## MCDAYS  1     52.1 64.1 3.33    0.068 .
+## TDAYS   1     49.3 61.3 0.51    0.476  
+## PCREV   1     49.0 61.0 0.18    0.674  
+## NSAL    1     54.8 66.8 5.97    0.015 *
+## FEXP    1     50.2 62.2 1.35    0.246  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<pre><code class="r">fit1 = update(fit,.~.-PCREV)
+# get the same result as LRT forward
+
+#ROC and Concordance
+#http://web.expasy.org/pROC/screenshots.html
+#http://thestatsgeek.com/2014/05/05/area-under-the-roc-curve-assessing-discrimination-in-logistic-regression/
+
+# install.packages(&quot;pROC&quot;,dependencies= T)
+# install.packages(&quot;Rcpp&quot;)
+
+library(pROC)
+
+# roc = area under curve = predicted power of model
+# adding extra predictors better, but not adding interaction
+fit1 =  glm(RURAL ~ NSAL, family=binomial(link=&quot;logit&quot;), data=mydata) 
+fit2  = glm(RURAL ~ MCDAYS+NSAL+TDAYS, family=binomial(link=&quot;logit&quot;), data=mydata) 
+rocobj1= plot.roc(mydata2$RURAL,
+                  fit1$fitted.values, percent = TRUE,col=&quot;#1c61b6&quot;)
+
+rocobj2= plot.roc(mydata2$RURAL,fit2$fitted.values, 
+                  add=T, percent = TRUE,col=&quot;#008600&quot;)# T = don&#39;t erase previous grap
+
+legend(&quot;bottomright&quot;, legend=c(&quot;NSAL&quot;, &quot;NSAL+MCDAYS+TDAYS&quot;), 
+       col=c(&quot;#1c61b6&quot;, &quot;#008600&quot;), lwd=2, inset=0.05,cex=0.75)
+
+testobj = roc.test(rocobj1, rocobj2)
+text(50, 50, labels=paste(&quot;p-value =&quot;, format.pval(testobj$p.value)), adj=c(0, .5))
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAxlBMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZrUAhgAcYbY5AAA5ADk5AGU5OWU5OY85ZmU5ZrU5j485j7U5j9pEAERlAABlADllAGVlOQBlOWVlOY9lZgBlZjllZmVlZrVlj9pltf2POQCPOTmPOWWPZgCPZo+PjzmPj9qPtY+P27WP29qP2/2pqXmpqam1ZgC1Zjm1ZmW1jzm1tWW124+1/rW1/v3ajznaj2Xa24/a/rXa/tra/v39tWX9tbX924/9/rX9/tr9/v3EOfPZAAAAQnRSTlP//////////////////////////////////////////////////////////////////////////////////////wBEFhAAAAAACXBIWXMAAAsSAAALEgHS3X78AAAVCklEQVR4nO3dC3vbyHUG4By5lWzFdTZhaCfupqGUbG6MuG0ToXHEksT//1PBAUCJIICDy1wwc+b7nl3T4gGgsV4NrgPiJzmSZH6ydAOQZQL4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4RAP4ROMJnhDvkUV8wfv5NshbSC4DXmtILgNea0guA15rSC4DXmtILgNea0guA15rSC4DXmtILgNea0guA15rSC4DXmtILgNea0guA15rSC4DXmtILgNea0guA15rSC4DXmtILgNea0guA15rSC4DXmtILgNea57kMuCV5onkOuB15gmr+iTzhG18kuHtO8mTWIU/3Je3cLx7blUGWoFYTblfR/I0NuFPD5vydX/7cl0aaAViM9X+PMkT2YQ/fnluvF5koBWIxdTHcSRPhR6vLefjd5Ins7qNP66xjV86r+dtSJ4Oe/W68na+juQJAa8qF+dpSZ4Sh3Oacnl+nuRJsXPnKu+9p3ldhuTmuT6cG/e5HArj372QvwzJ7UOPd5QrBg+5ug5L8tQ4nHMU7/DX199Jnhx79Y7iG7417oLk6QHvKJ7h2+NtSJ4B8I7iF75jnBXJcwDeUbzCd42vI3kWq4dz6/rYrb13N9AKhfEJ3zmukuR5rPb408OqpzLQCoXxCN89npbkmeyu6o+f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" alt="plot of chunk unnamed-chunk-9"/> </p>
+
+<p>The best logistic regression model according to BIC is RURAL~NSAL, according to AIC is RURAL~MCDAYS+NSAL+TDAYS, and according to CV is RURAL~NSAL . Using LRT sequentially the best model is RURAL~NSAL. Note that by looking at the ROC curves and concordance index (Area Under the Curve = percent concordant adjusted for ties), we see that RURAL~MCDAYS+NSAL+TDAYS has higher discriminatory power than RURAL~NSAL. AUC can be interpreted as being the fraction of 0-1 pairs correctly classified by the model. However, the difference betwween the AUC&#39;s are not statistically different. Thus, the best mdodel seems to be RURAL~NSAL (including intercept).</p>
+
+<h2>Part b</h2>
+
+<pre><code class="r"># Stepwise regression to determine best model, start with all variables
+library(MASS)
+fit = lm(PCREV ~ ., data = mydata2)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = PCREV ~ ., data = mydata2)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -11886   -547    138   1179   7554 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -2839.585   1542.191   -1.84  0.07218 .  
+## BED            43.723     18.610    2.35  0.02325 *  
+## MCDAYS          3.216      8.677    0.37  0.71268    
+## TDAYS          33.382      9.106    3.67  0.00065 ***
+## NSAL            0.537      0.325    1.66  0.10469    
+## FEXP            0.265      0.244    1.08  0.28372    
+## RURAL         343.701    940.942    0.37  0.71662    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Residual standard error: 2700 on 45 degrees of freedom
+## Multiple R-squared: 0.868,   Adjusted R-squared: 0.85 
+## F-statistic: 49.3 on 6 and 45 DF,  p-value: &lt;2e-16
+</code></pre>
+
+<pre><code class="r"># Find best model using AIC and BIC criteria
+fitAIC = step(fit, direction = &quot;both&quot;)
+</code></pre>
+
+<pre><code>## Start:  AIC=828.1
+## PCREV ~ BED + MCDAYS + TDAYS + NSAL + FEXP + RURAL
+## 
+##          Df Sum of Sq      RSS AIC
+## - RURAL   1    971845 3.29e+08 826
+## - MCDAYS  1   1000333 3.29e+08 826
+## - FEXP    1   8574053 3.36e+08 827
+## &lt;none&gt;                3.28e+08 828
+## - NSAL    1  19973594 3.48e+08 829
+## - BED     1  40207259 3.68e+08 832
+## - TDAYS   1  97893829 4.26e+08 840
+## 
+## Step:  AIC=826.3
+## PCREV ~ BED + MCDAYS + TDAYS + NSAL + FEXP
+## 
+##          Df Sum of Sq      RSS AIC
+## - MCDAYS  1   1617547 3.30e+08 825
+## - FEXP    1   9376070 3.38e+08 826
+## &lt;none&gt;                3.29e+08 826
+## - NSAL    1  19242995 3.48e+08 827
+## + RURAL   1    971845 3.28e+08 828
+## - BED     1  39268507 3.68e+08 830
+## - TDAYS   1  96922024 4.26e+08 838
+## 
+## Step:  AIC=824.5
+## PCREV ~ BED + TDAYS + NSAL + FEXP
+## 
+##          Df Sum of Sq      RSS AIC
+## - FEXP    1  1.25e+07 3.43e+08 824
+## &lt;none&gt;                3.30e+08 825
+## - NSAL    1  1.78e+07 3.48e+08 825
+## + MCDAYS  1  1.62e+06 3.29e+08 826
+## + RURAL   1  1.59e+06 3.29e+08 826
+## - BED     1  3.83e+07 3.69e+08 828
+## - TDAYS   1  2.99e+08 6.29e+08 856
+## 
+## Step:  AIC=824.5
+## PCREV ~ BED + TDAYS + NSAL
+## 
+##          Df Sum of Sq      RSS AIC
+## &lt;none&gt;                3.43e+08 824
+## + FEXP    1  1.25e+07 3.30e+08 825
+## + MCDAYS  1  4.74e+06 3.38e+08 826
+## + RURAL   1  3.53e+06 3.39e+08 826
+## - NSAL    1  3.23e+07 3.75e+08 827
+## - BED     1  6.28e+07 4.06e+08 831
+## - TDAYS   1  2.86e+08 6.29e+08 854
+</code></pre>
+
+<pre><code class="r">fitBIC = step(fit, direction = &quot;both&quot;, k = log(n))
+</code></pre>
+
+<pre><code>## Start:  AIC=841.8
+## PCREV ~ BED + MCDAYS + TDAYS + NSAL + FEXP + RURAL
+## 
+##          Df Sum of Sq      RSS AIC
+## - RURAL   1    971845 3.29e+08 838
+## - MCDAYS  1   1000333 3.29e+08 838
+## - FEXP    1   8574053 3.36e+08 839
+## - NSAL    1  19973594 3.48e+08 841
+## &lt;none&gt;                3.28e+08 842
+## - BED     1  40207259 3.68e+08 844
+## - TDAYS   1  97893829 4.26e+08 851
+## 
+## Step:  AIC=838
+## PCREV ~ BED + MCDAYS + TDAYS + NSAL + FEXP
+## 
+##          Df Sum of Sq      RSS AIC
+## - MCDAYS  1   1617547 3.30e+08 834
+## - FEXP    1   9376070 3.38e+08 836
+## - NSAL    1  19242995 3.48e+08 837
+## &lt;none&gt;                3.29e+08 838
+## - BED     1  39268507 3.68e+08 840
+## + RURAL   1    971845 3.28e+08 842
+## - TDAYS   1  96922024 4.26e+08 847
+## 
+## Step:  AIC=834.3
+## PCREV ~ BED + TDAYS + NSAL + FEXP
+## 
+##          Df Sum of Sq      RSS AIC
+## - FEXP    1  1.25e+07 3.43e+08 832
+## - NSAL    1  1.78e+07 3.48e+08 833
+## &lt;none&gt;                3.30e+08 834
+## - BED     1  3.83e+07 3.69e+08 836
+## + MCDAYS  1  1.62e+06 3.29e+08 838
+## + RURAL   1  1.59e+06 3.29e+08 838
+## - TDAYS   1  2.99e+08 6.29e+08 864
+## 
+## Step:  AIC=832.3
+## PCREV ~ BED + TDAYS + NSAL
+## 
+##          Df Sum of Sq      RSS AIC
+## &lt;none&gt;                3.43e+08 832
+## - NSAL    1  3.23e+07 3.75e+08 833
+## + FEXP    1  1.25e+07 3.30e+08 834
+## + MCDAYS  1  4.74e+06 3.38e+08 836
+## + RURAL   1  3.53e+06 3.39e+08 836
+## - BED     1  6.28e+07 4.06e+08 837
+## - TDAYS   1  2.86e+08 6.29e+08 860
+</code></pre>
+
+<pre><code class="r">summary(fitAIC)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = PCREV ~ BED + TDAYS + NSAL, data = mydata2)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -11879   -706    -27   1174   7193 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -2187.591   1072.555   -2.04   0.0469 *  
+## BED            48.024     16.196    2.97   0.0047 ** 
+## TDAYS          34.807      5.498    6.33  7.8e-08 ***
+## NSAL            0.568      0.267    2.12   0.0388 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Residual standard error: 2670 on 48 degrees of freedom
+## Multiple R-squared: 0.862,   Adjusted R-squared: 0.853 
+## F-statistic: 99.7 on 3 and 48 DF,  p-value: &lt;2e-16
+</code></pre>
+
+<pre><code class="r">summary(fitBIC)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = PCREV ~ BED + TDAYS + NSAL, data = mydata2)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -11879   -706    -27   1174   7193 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -2187.591   1072.555   -2.04   0.0469 *  
+## BED            48.024     16.196    2.97   0.0047 ** 
+## TDAYS          34.807      5.498    6.33  7.8e-08 ***
+## NSAL            0.568      0.267    2.12   0.0388 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Residual standard error: 2670 on 48 degrees of freedom
+## Multiple R-squared: 0.862,   Adjusted R-squared: 0.853 
+## F-statistic: 99.7 on 3 and 48 DF,  p-value: &lt;2e-16
+</code></pre>
+
+<pre><code class="r">
+x = mydata2[, -4]  # design matrix or use model.matrix(fullfit)
+y = mydata2[, 4]  # response vector
+
+# function returns best subset function with different criteria
+modelSelection = function(x, y) {
+    # Inputs: x = design matrix y = response vector
+    n = length(y)  # number of observations
+    p = dim(x)[2]  # number of predictors
+
+    # Variable Selection Using Package
+    library(leaps)
+
+    # find the best subset
+    reg_exh = regsubsets(x, y, nbest = 1, nvmax = n, method = &quot;exhaustive&quot;)
+    # summary(reg_exh,matrix.logical=TRUE) names(reg_exh)
+    # names(summary(reg_exh))
+
+    # get matrix with models
+    models = summary(reg_exh)$which  # T/F -&gt; multiply by 1 to get 1/0 (not needed)
+    msize = as.numeric(apply(models, 1, sum))  # model size
+
+    # compute criteria
+    cp = summary(reg_exh)$cp
+    cp = round(cp, 3)
+    adjr2 = summary(reg_exh)$adjr2
+    adjr2 = round(adjr2, 3)
+    aic = n * log(summary(reg_exh)$rss/n) + 2 * msize
+    aic = round(aic, 3)
+    bic = n * log(summary(reg_exh)$rss/n) + msize * log(n)
+    bic = round(bic, 3)
+    # different from regsubsets, just differ by constant bic =
+    # summary(reg_exh)$bic; bic = round(bic,3)
+
+    # alternative optimizing various criteria leaps(x,y,nbest=1,method=&#39;Cp&#39;)
+    # leaps(x,y,nbest=1,method=&#39;adjr2&#39;)
+
+    # rank by criteria
+    rk_cp = as.numeric(factor(cp))
+    rk_adjr2 = vector(length = length(adjr2))
+    rk_adjr2[order(adjr2, decreasing = TRUE)] = 1:length(adjr2)  # highest is better
+    rk_aic = as.numeric(factor(aic))
+    rk_bic = as.numeric(factor(bic))
+
+    rk_tot = rk_cp + rk_adjr2 + rk_aic + rk_bic
+
+    # create matrix and data frame of results
+    results = cbind(msize, models, cp, adjr2, aic, bic, rk_cp, rk_adjr2, rk_aic, 
+        rk_bic, rk_tot)
+
+    colnames(results)[2] = &quot;Int&quot;
+
+    results_df = data.frame(results)
+
+    # display results
+    results
+
+    # alternative x1 = vector(length=length(cp)) x1[order(cp)] = 1:length(cp)
+
+    # Models
+    cp_model = c(&quot;intercept&quot;, colnames(x)[models[order(cp)[1], ][-1]])
+    adjr2_model = c(&quot;intercept&quot;, colnames(x)[models[order(adjr2, decreasing = TRUE)[1], 
+        ][-1]])
+    aic_model = c(&quot;intercept&quot;, colnames(x)[models[order(aic)[1], ][-1]])
+    bic_model = c(&quot;intercept&quot;, colnames(x)[models[order(bic)[1], ][-1]])
+
+    cat(&quot;best cp model:\n&quot;, cp_model, &quot;\n&quot;)
+    cat(&quot;best adjr2 model:\n&quot;, adjr2_model, &quot;\n&quot;)
+    cat(&quot;best aic model:\n&quot;, aic_model, &quot;\n&quot;)
+    cat(&quot;best bic model:\n&quot;, bic_model, &quot;\n&quot;)
+
+    # Order results results[order(cp),]; # order by Cp
+    # results[order(adjr2,decreasing=TRUE),]; # order by adjr2
+    # results[order(aic),]; # order by BIC results[order(bic),]; # order by
+    # BIC
+
+    # alternative sort(cp, decreasing = FALSE,index.return=TRUE)$ix &lt;-&gt;
+    # order(cp)
+
+    # plots
+
+    plot(reg_exh, scale = &quot;adjr2&quot;)
+    plot(reg_exh, scale = &quot;bic&quot;)
+    plot(reg_exh, scale = &quot;Cp&quot;)
+
+    localenv = environment()
+
+    require(ggplot2)
+    require(grid)
+    require(gridExtra)
+
+
+    plot_vector = vector(mode = &quot;list&quot;, length = 4)
+
+    plot_vector[[1]] = ggplot(results_df, aes(x = results_df[[1]], y = results_df[[p + 
+        3]]), environment = localenv) + geom_point(size = 4) + geom_line(aes(y = results_df[[p + 
+        3]]), colour = &quot;blue&quot;) + labs(x = colnames(results_df[1]), y = colnames(results_df[p + 
+        3])) + scale_x_continuous(breaks = msize) + geom_point(data = results_df[order(cp)[1], 
+        ], aes(x = msize, y = cp), colour = &quot;red&quot;, size = 5)
+
+
+    plot_vector[[2]] = ggplot(results_df, aes(x = results_df[[1]], y = results_df[[p + 
+        3 + 1]]), environment = localenv) + geom_point(size = 4) + geom_line(aes(y = results_df[[p + 
+        3 + 1]]), colour = &quot;blue&quot;) + labs(x = colnames(results_df[1]), y = colnames(results_df[p + 
+        3 + 1])) + scale_x_continuous(breaks = msize) + geom_point(data = results_df[order(adjr2, 
+        decreasing = TRUE)[1], ], aes(x = msize, y = adjr2), colour = &quot;red&quot;, 
+        size = 5)
+
+    plot_vector[[3]] = ggplot(results_df, aes(x = results_df[[1]], y = results_df[[p + 
+        3 + 2]]), environment = localenv) + geom_point(size = 4) + geom_line(aes(y = results_df[[p + 
+        3 + 2]]), colour = &quot;blue&quot;) + labs(x = colnames(results_df[1]), y = colnames(results_df[p + 
+        3 + 2])) + scale_x_continuous(breaks = msize) + geom_point(data = results_df[order(aic)[1], 
+        ], aes(x = msize, y = aic), colour = &quot;red&quot;, size = 5)
+
+    plot_vector[[4]] = ggplot(results_df, aes(x = results_df[[1]], y = results_df[[p + 
+        3 + 3]]), environment = localenv) + geom_point(size = 4) + geom_line(aes(y = results_df[[p + 
+        3 + 3]]), colour = &quot;blue&quot;) + labs(x = colnames(results_df[1]), y = colnames(results_df[p + 
+        3 + 3])) + scale_x_continuous(breaks = msize) + geom_point(data = results_df[order(bic)[1], 
+        ], aes(x = msize, y = bic), colour = &quot;red&quot;, size = 5)
+
+
+    grid.arrange(plot_vector[[1]], plot_vector[[2]], plot_vector[[3]], plot_vector[[4]], 
+        ncol = 2, main = &quot;Model Selection&quot;)
+
+
+
+    return(results_df)
+
+}
+
+bestSubset = modelSelection(x, y)
+</code></pre>
+
+<pre><code>## best cp model:
+##  intercept BED TDAYS NSAL 
+## best adjr2 model:
+##  intercept BED TDAYS NSAL FEXP 
+## best aic model:
+##  intercept BED TDAYS NSAL 
+## best bic model:
+##  intercept BED TDAYS NSAL
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-10"/> <img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-10"/> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAgVBMVEX9/v0AAAAAADkAAGUAOY8AZrUaGhozMzM5AAA5ADk5AGU5OWU5OY85j9pNTU1lAABlADllAGVlOQBlOY9lZrVltf2POQCPOTmPOWWPtY+P29qP2/21ZgC1ZmW1/rW1/tq1/v3ajzna/rXa/v3m5ub9tWX924/929r9/rX9/tr9/v2mxTW3AAAAK3RSTlP///////////////////////////////////////////////////////8AI8mn0AAAAAlwSFlzAAALEgAACxIB0t1+/AAADwBJREFUeJztne1229YRRUNbap00rpy2UpKabcyqUiW9/wOWIAWKFnltnUNgMODs/cPWSg7WzGAbxAch4IcnKMkPUzcA04D4oiC+KIgvCuKLgviiIL4oiC8K4ouC+KIgviiILwrii4L4oiC+KIgvCuKLgviiIL4oiC8K4ouC+KIgviiILwrii4L4oiC+KIgvCuKLgviiIL4oiC8K4ouC+KIgviiILwrii4L4oiC+KIgvCuKLgviiIL4oiC8K4ouC+KIgviiILwrii4L4oiC+KIgvCuKLgviiIL4oiC8K4ouC+KIgviiILwrii4L4oiC+KIgvCuKLgviiIL4oiC8K4ouC+KIgviiILwrii4L4oiC+KIgvCuKLgviiIL4oiC8K4ouC+KIgviiILwrii4L4ogwnfgFTU0H8LJp0u3SHU8KIT9ilO5wSRnzCLt3hlDDiE3bpDqeEEZ+wS3c4JYz4hF26wylhxCfs0h1OCSM+YZfucEoY8Qm7dIdTwohP2KU7nBJGfMIu3eGUMOITdukOp4QRn7BLdzgljPiEXbrDKWHEJ+zSHU4JIz5hl+5wShjxCbt0h1PCiE/YpTucEkZ8wi7d4ZQw4hN26Q6nhBGfsEt3OCWM+IRdusMpYUX83WLx/svzz/c/fXn1f2exSmObPBPxnevV5fbnu5d/Aruyc1ilsU2eifiO5w19+e53tvjxunSHU8Ki+H6L3/+oD16ZJ63SeXTpDqeEJfH3H9597n9kix+vS3c4JSxu8Q+fns0jfsQu3eGUsHo6t7ze/o34Ebt0h1PCgvi7i1u2+JAu3eGUsLLFrxaL9T5+qxzxI3bpDqeEuXKXsEt3OCWM+IRdusMpYcQn7NId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" alt="plot of chunk unnamed-chunk-10"/> <img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-10"/> </p>
+
+<pre><code class="r">bestSubset
+</code></pre>
+
+<pre><code>##   msize Int BED MCDAYS TDAYS NSAL FEXP RURAL     cp adjr2   aic   bic
+## 1     2   1   0      0     1    0    0     0 14.819 0.812 835.5 839.4
+## 2     3   1   1      0     1    0    0     0  5.499 0.843 827.2 833.0
+## 3     4   1   1      0     1    1    0     0  3.071 0.853 824.5 832.3
+## 4     5   1   1      0     1    1    1     0  3.355 0.855 824.6 834.3
+## 5     6   1   1      1     1    1    1     0  5.133 0.853 826.3 838.0
+## 6     7   1   1      1     1    1    1     1  7.000 0.850 828.1 841.8
+##   rk_cp rk_adjr2 rk_aic rk_bic rk_tot
+## 1     6        6      6      5     23
+## 2     4        5      4      2     15
+## 3     1        2      1      1      5
+## 4     2        1      2      3      8
+## 5     3        3      3      4     13
+## 6     5        4      5      6     20
+</code></pre>
+
+<p>All coefficients in the model are positive indicating higher values of the predictors values (hospital characteristics) have a positive effect in PCREV.For example, after controlling for the other hospital characteristics, a higher number of beds in home leads to an expected increase in total patient care revenue. Similar conclusions can be drawn from the coefficients of the other variables. However, only TDAYS seems to have a signficant effect on the patient care revenue. For the variable RURAL, it suggests that RURAL homes have a higher PCREV than non-rural. The effect seems to be very large, but not statistically significant. </p>
+
+<p>Both AIC and BIC stepwise methods give PCREV ~ BED + TDAYS + NSAL as the model (including intercept). This model is also best in CP, AIC, BIC and second best in adjusted R<sup>2.</sup> Thus, this model seems to be the best model in predicting PREV. </p>
+
+<h1>Problem 4</h1>
+
+<pre><code class="r">
+# Import data filename = &#39;p349-50.txt&#39; mydata = read.table(filename,header
+# = T) Note: this file is missing observations after 90, use other file
+# instead
+
+# Import data
+filename = &quot;diabetes.txt&quot;
+mydata = read.table(filename, header = T)
+
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+
+</code></pre>
+
+<h2>Part a</h2>
+
+<pre><code class="r">
+# install.packages(&#39;mlogit&#39;)
+library(mlogit)
+</code></pre>
+
+<pre><code>## Loading required package: Formula
+## Loading required package: maxLik
+## Loading required package: miscTools
+## 
+## Please cite the &#39;maxLik&#39; package as:
+## Henningsen, Arne and Toomet, Ott (2011). maxLik: A package for maximum likelihood estimation in R. Computational Statistics 26(3), 443-458. DOI 10.1007/s00180-010-0217-1.
+## 
+## If you have questions, suggestions, or comments regarding the &#39;maxLik&#39; package, please use a forum or &#39;tracker&#39; at maxLik&#39;s R-Forge site:
+## https://r-forge.r-project.org/projects/maxlik/
+</code></pre>
+
+<pre><code class="r">diab = mlogit.data(data = mydata, choice = &quot;CC&quot;, shape = &quot;wide&quot;, varying = NULL)
+
+# Table 12.9: Multinomial logistic Regression with IR,SSPG
+fit = mlogit(CC ~ 0 | IR + SSPG, data = diab, reflevel = &quot;3&quot;)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## mlogit(formula = CC ~ 0 | IR + SSPG, data = diab, reflevel = &quot;3&quot;, 
+##     method = &quot;nr&quot;, print.level = 0)
+## 
+## Frequencies of alternatives:
+##     3     1     2 
+## 0.524 0.228 0.248 
+## 
+## nr method
+## 7 iterations, 0h:0m:0s 
+## g&#39;(-H)^-1g = 6.13E-05 
+## successive function values within tolerance limits 
+## 
+## Coefficients :
+##               Estimate Std. Error t-value Pr(&gt;|t|)    
+## 1:(intercept) -7.11066    1.68823   -4.21  2.5e-05 ***
+## 2:(intercept) -4.54850    0.77147   -5.90  3.7e-09 ***
+## 1:IR          -0.01343    0.00465   -2.89   0.0039 ** 
+## 2:IR           0.00326    0.00229    1.42   0.1553    
+## 1:SSPG         0.04259    0.00797    5.34  9.2e-08 ***
+## 2:SSPG         0.01951    0.00445    4.38  1.2e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Log-Likelihood: -72
+## McFadden R^2:  0.514 
+## Likelihood ratio test : chisq = 152 (p.value = &lt;2e-16)
+</code></pre>
+
+<pre><code class="r">
+
+# Calculate probabilities for each observation or summary(fit)$prob
+Y.prob = fitted(fit, outcome = FALSE)
+head(Y.prob)
+</code></pre>
+
+<pre><code>##           3        1       2
+## [1,] 0.9542 0.001534 0.04423
+## [2,] 0.9323 0.004028 0.06363
+## [3,] 0.8762 0.009182 0.11461
+## [4,] 0.8532 0.004790 0.14201
+## [5,] 0.7189 0.010336 0.27073
+## [6,] 0.6438 0.072010 0.28418
+</code></pre>
+
+<pre><code class="r">
+# classify to the category for which it has the highest estimated
+# probabilities
+n = dim(mydata)[1]
+Y.hat = rep(0, n)
+for (i in 1:n) {
+    if (max(Y.prob[i, ]) == Y.prob[i, 1]) {
+        Y.hat[i] = 3
+    } else if (max(Y.prob[i, ]) == Y.prob[i, 2]) {
+        Y.hat[i] = 1
+    } else if (max(Y.prob[i, ]) == Y.prob[i, 3]) {
+        Y.hat[i] = 2
+    }
+}
+Y.hat
+</code></pre>
+
+<pre><code>##   [1] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 3 3 3 3 3 3 3 3 3
+##  [36] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 3 3 3 3 3 3 3 3 3 3 2 3 3 1 3 3 1 2 3
+##  [71] 2 3 3 3 2 3 3 3 3 3 3 2 3 1 3 2 2 2 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2 2 3
+## [106] 2 3 2 3 3 3 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 3 3 2 2 1 1 1
+## [141] 1 3 1 1 1
+</code></pre>
+
+<pre><code class="r">
+# Table 12.10: Classification table
+ctable = table(mydata$CC, Y.hat)
+ctable = addmargins(ctable)
+ctable
+</code></pre>
+
+<pre><code>##      Y.hat
+##         1   2   3 Sum
+##   1    27   3   3  33
+##   2     1  22  13  36
+##   3     2   5  69  76
+##   Sum  30  30  85 145
+</code></pre>
+
+<pre><code class="r">
+correct.rate = sum(diag(ctable)[1:3])/n
+correct.rate
+</code></pre>
+
+<pre><code>## [1] 0.8138
+</code></pre>
+
+<pre><code class="r">
+## include RW install.packages(&#39;mlogit&#39;)
+library(mlogit)
+diab = mlogit.data(data = mydata, choice = &quot;CC&quot;, shape = &quot;wide&quot;, varying = NULL)
+
+# Table 12.9: Multinomial logistic Regression with IR,SSPG
+fit = mlogit(CC ~ 0 | IR + SSPG + RW, data = diab, reflevel = &quot;3&quot;)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## mlogit(formula = CC ~ 0 | IR + SSPG + RW, data = diab, reflevel = &quot;3&quot;, 
+##     method = &quot;nr&quot;, print.level = 0)
+## 
+## Frequencies of alternatives:
+##     3     1     2 
+## 0.524 0.228 0.248 
+## 
+## nr method
+## 7 iterations, 0h:0m:0s 
+## g&#39;(-H)^-1g = 0.00028 
+## successive function values within tolerance limits 
+## 
+## Coefficients :
+##               Estimate Std. Error t-value Pr(&gt;|t|)    
+## 1:(intercept) -1.84461    3.46346   -0.53  0.59432    
+## 2:(intercept) -7.61542    2.33563   -3.26  0.00111 ** 
+## 1:IR          -0.01335    0.00502   -2.66  0.00780 ** 
+## 2:IR           0.00359    0.00235    1.53  0.12680    
+## 1:SSPG         0.04550    0.00924    4.92  8.5e-07 ***
+## 2:SSPG         0.01641    0.00498    3.29  0.00098 ***
+## 1:RW          -5.86746    3.86658   -1.52  0.12915    
+## 2:RW           3.47277    2.44616    1.42  0.15570    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Log-Likelihood: -68.4
+## McFadden R^2:  0.538 
+## Likelihood ratio test : chisq = 159 (p.value = &lt;2e-16)
+</code></pre>
+
+<pre><code class="r">
+# Calculate probabilities for each observation or summary(fit)$prob
+Y.prob = fitted(fit, outcome = FALSE)
+head(Y.prob)
+</code></pre>
+
+<pre><code>##           3        1       2
+## [1,] 0.9664 0.003074 0.03053
+## [2,] 0.9305 0.003717 0.06580
+## [3,] 0.8835 0.009896 0.10662
+## [4,] 0.8179 0.002765 0.17937
+## [5,] 0.7118 0.008652 0.27955
+## [6,] 0.6283 0.257438 0.11425
+</code></pre>
+
+<pre><code class="r">
+# classify to the category for which it has the highest estimated
+# probabilities
+n = dim(mydata)[1]
+Y.hat = rep(0, n)
+for (i in 1:n) {
+    if (max(Y.prob[i, ]) == Y.prob[i, 1]) {
+        Y.hat[i] = 3
+    } else if (max(Y.prob[i, ]) == Y.prob[i, 2]) {
+        Y.hat[i] = 1
+    } else if (max(Y.prob[i, ]) == Y.prob[i, 3]) {
+        Y.hat[i] = 2
+    }
+}
+Y.hat
+</code></pre>
+
+<pre><code>##   [1] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 3 3 3 3 3 3 3 3 3
+##  [36] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 3 3 3 3 3 3 3 3 3 3 2 2 3 2 3 3 1 2 3
+##  [71] 2 3 3 3 2 3 3 3 3 3 3 2 2 2 3 2 2 3 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2 2 3
+## [106] 2 3 3 2 3 3 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 3 3 2 2 1 1 1
+## [141] 1 3 1 1 1
+</code></pre>
+
+<pre><code class="r">
+# Table 12.10: Classification table
+ctable2 = table(mydata$CC, Y.hat)
+ctable2 = addmargins(ctable2)
+ctable2
+</code></pre>
+
+<pre><code>##      Y.hat
+##         1   2   3 Sum
+##   1    27   3   3  33
+##   2     0  24  12  36
+##   3     2   5  69  76
+##   Sum  29  32  84 145
+</code></pre>
+
+<pre><code class="r">
+correct.rate2 = sum(diag(ctable2)[1:3])/n
+correct.rate2
+</code></pre>
+
+<pre><code>## [1] 0.8276
+</code></pre>
+
+<p>The classification rate for multinomial logistic model CC~IR+SSPG is 81.3793 %, while the rate for CC~IR+SSPG+RW is 82.7586 %, which is an improvement of just  1.3793%. Thus, the inclusion of RW does not result in a substantial improvement in the classification rate from the multinomial logistic model using IR and SSPG. </p>
+
+<h2>Part b</h2>
+
+<pre><code class="r">
+# Table 12.11: Ordinal Logistic Regression with IR, SSPG
+# install.packages(&#39;ordinal&#39;)
+library(ordinal)
+mydata$CC.ordered = as.ordered(mydata$CC)
+fit = clm(CC.ordered ~ IR + SSPG, data = mydata)
+fit1 = fit
+summary(fit)
+</code></pre>
+
+<pre><code>## formula: CC.ordered ~ IR + SSPG
+## data:    mydata
+## 
+##  link  threshold nobs logLik AIC    niter max.grad cond.H 
+##  logit flexible  145  -81.75 171.50 6(0)  1.48e-12 2.6e+06
+## 
+## Coefficients:
+##      Estimate Std. Error z value Pr(&gt;|z|)    
+## IR    0.00406    0.00174    2.33     0.02 *  
+## SSPG -0.02814    0.00359   -7.83  4.7e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Threshold coefficients:
+##     Estimate Std. Error z value
+## 1|2   -6.794      0.857   -7.93
+## 2|3   -4.189      0.662   -6.33
+</code></pre>
+
+<pre><code class="r">
+# Table 12.12: Classification table
+Y.hat = predict(fit, data = mydata, type = &quot;class&quot;)$fit
+ctable = table(mydata$CC, Y.hat)
+ctable = addmargins(ctable)
+ctable
+</code></pre>
+
+<pre><code>##      Y.hat
+##         1   2   3 Sum
+##   1    26   5   2  33
+##   2     3  20  13  36
+##   3     0   8  68  76
+##   Sum  29  33  83 145
+</code></pre>
+
+<pre><code class="r">
+correct.rate = sum(diag(ctable)[1:3])/n
+correct.rate
+</code></pre>
+
+<pre><code>## [1] 0.7862
+</code></pre>
+
+<pre><code class="r">
+# add RW
+
+# Table 12.11: Ordinal Logistic Regression with IR, SSPG
+# install.packages(&#39;ordinal&#39;)
+library(ordinal)
+mydata$CC.ordered = as.ordered(mydata$CC)
+fit = clm(CC.ordered ~ IR + SSPG + RW, data = mydata)
+summary(fit)
+</code></pre>
+
+<pre><code>## formula: CC.ordered ~ IR + SSPG + RW
+## data:    mydata
+## 
+##  link  threshold nobs logLik AIC    niter max.grad cond.H 
+##  logit flexible  145  -81.21 172.42 6(0)  8.56e-13 2.1e+07
+## 
+## Coefficients:
+##      Estimate Std. Error z value Pr(&gt;|z|)    
+## IR    0.00377    0.00178    2.11    0.035 *  
+## SSPG -0.02927    0.00383   -7.65    2e-14 ***
+## RW    1.92002    1.86155    1.03    0.302    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Threshold coefficients:
+##     Estimate Std. Error z value
+## 1|2    -5.16       1.77   -2.91
+## 2|3    -2.53       1.72   -1.47
+</code></pre>
+
+<pre><code class="r">
+# Table 12.12: Classification table
+Y.hat = predict(fit, data = mydata, type = &quot;class&quot;)$fit
+ctable2 = table(mydata$CC, Y.hat)
+ctable2 = addmargins(ctable2)
+ctable2
+</code></pre>
+
+<pre><code>##      Y.hat
+##         1   2   3 Sum
+##   1    26   5   2  33
+##   2     2  21  13  36
+##   3     0   9  67  76
+##   Sum  28  35  82 145
+</code></pre>
+
+<pre><code class="r">
+correct.rate2 = sum(diag(ctable2)[1:3])/n
+correct.rate2
+</code></pre>
+
+<pre><code>## [1] 0.7862
+</code></pre>
+
+<pre><code class="r">
+anova(fit1, fit)
+</code></pre>
+
+<pre><code>## Likelihood ratio tests of cumulative link models:
+##  
+##      formula:                    link: threshold:
+## fit1 CC.ordered ~ IR + SSPG      logit flexible  
+## fit  CC.ordered ~ IR + SSPG + RW logit flexible  
+## 
+##      no.par AIC logLik LR.stat df Pr(&gt;Chisq)
+## fit1      4 171  -81.7                      
+## fit       5 172  -81.2    1.08  1        0.3
+</code></pre>
+
+<p>The classification rate for ordinal logistic model CC~IR+SSPG is 78.6207 %, while the rate for CC~IR+SSPG+RW is 78.6207 %, which is an improvement of just  0%. Thus, the inclusion of RW does not result in a substantial improvement in the classification rate from the ordinal logistic model using IR and SSPG. </p>
+
+<p>The p-value &gt; 0.05 (do not reject null that coefficient of RW is zero) indicates that the model without RW is better than the one with RW. Thus, there in no substantial improvment in the fit by adding RW. </p>
+
+<h1>Problem 5</h1>
+
+<pre><code class="r"># Import data
+filename = &quot;MAMMOGRAPHY+DATA.csv&quot;
+mydata = read.csv(filename, header = T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+</code></pre>
+
+<h2>Part a</h2>
+
+<pre><code class="r">is_even = function(x) x%%2 == 0
+
+train_data = mydata[!sapply(mydata$OBS, is_even), c(&quot;OBS&quot;, &quot;ME&quot;, &quot;HIST&quot;, &quot;PB&quot;)]
+test_data = mydata[sapply(mydata$OBS, is_even), c(&quot;OBS&quot;, &quot;ME&quot;, &quot;HIST&quot;, &quot;PB&quot;)]
+head(train_data)
+</code></pre>
+
+<pre><code>##    OBS ME HIST PB
+## 1    1  0    0  7
+## 3    3  0    1  8
+## 5    5  2    0  7
+## 7    7  2    0  6
+## 9    9  0    0  6
+## 11  11  0    0  8
+</code></pre>
+
+<pre><code class="r">head(test_data)
+</code></pre>
+
+<pre><code>##    OBS ME HIST PB
+## 2    2  0    0 11
+## 4    4  1    0 11
+## 6    6  0    0  7
+## 8    8  0    0  6
+## 10  10  1    0  6
+## 12  12  0    1  6
+</code></pre>
+
+<pre><code class="r">
+
+# install.packages(&#39;mlogit&#39;)
+library(mlogit)
+mammo = mlogit.data(data = train_data, choice = &quot;ME&quot;, shape = &quot;wide&quot;, varying = NULL)
+head(mammo, 20)
+</code></pre>
+
+<pre><code>##      OBS    ME HIST PB chid alt
+## 1.0    1  TRUE    0  7    1   0
+## 1.1    1 FALSE    0  7    1   1
+## 1.2    1 FALSE    0  7    1   2
+## 3.0    3  TRUE    1  8    3   0
+## 3.1    3 FALSE    1  8    3   1
+## 3.2    3 FALSE    1  8    3   2
+## 5.0    5 FALSE    0  7    5   0
+## 5.1    5 FALSE    0  7    5   1
+## 5.2    5  TRUE    0  7    5   2
+## 7.0    7 FALSE    0  6    7   0
+## 7.1    7 FALSE    0  6    7   1
+## 7.2    7  TRUE    0  6    7   2
+## 9.0    9  TRUE    0  6    9   0
+## 9.1    9 FALSE    0  6    9   1
+## 9.2    9 FALSE    0  6    9   2
+## 11.0  11  TRUE    0  8   11   0
+## 11.1  11 FALSE    0  8   11   1
+## 11.2  11 FALSE    0  8   11   2
+## 13.0  13  TRUE    0  6   13   0
+## 13.1  13 FALSE    0  6   13   1
+</code></pre>
+
+<pre><code class="r">head(mydata, 15)
+</code></pre>
+
+<pre><code>##    OBS ME SYMPT PB HIST BSE DETC
+## 1    1  0     3  7    0   1    2
+## 2    2  0     2 11    0   1    3
+## 3    3  0     3  8    1   1    3
+## 4    4  1     3 11    0   1    3
+## 5    5  2     4  7    0   1    3
+## 6    6  0     3  7    0   1    3
+## 7    7  2     4  6    0   1    2
+## 8    8  0     4  6    0   1    3
+## 9    9  0     2  6    0   1    3
+## 10  10  1     4  6    0   1    3
+## 11  11  0     4  8    0   1    2
+## 12  12  0     3  6    1   0    3
+## 13  13  0     4  6    0   1    3
+## 14  14  0     1  5    1   1    3
+## 15  15  0     2  8    0   0    2
+</code></pre>
+
+<pre><code class="r"># Table 12.9: Multinomial logistic Regression with IR,SSPG
+fit = mlogit(ME ~ 0 | PB + HIST, data = mammo, reflevel = &quot;0&quot;)
+summary(fit)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## mlogit(formula = ME ~ 0 | PB + HIST, data = mammo, reflevel = &quot;0&quot;, 
+##     method = &quot;nr&quot;, print.level = 0)
+## 
+## Frequencies of alternatives:
+##     0     1     2 
+## 0.602 0.238 0.160 
+## 
+## nr method
+## 4 iterations, 0h:0m:0s 
+## g&#39;(-H)^-1g = 0.000273 
+## successive function values within tolerance limits 
+## 
+## Coefficients :
+##               Estimate Std. Error t-value Pr(&gt;|t|)   
+## 1:(intercept)   1.0357     0.7153    1.45   0.1476   
+## 2:(intercept)   0.2425     0.7919    0.31   0.7594   
+## 1:PB           -0.2997     0.0983   -3.05   0.0023 **
+## 2:PB           -0.2250     0.1064   -2.11   0.0345 * 
+## 1:HIST          1.6554     0.5268    3.14   0.0017 **
+## 2:HIST          1.0648     0.6300    1.69   0.0910 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Log-Likelihood: -182
+## McFadden R^2:  0.0626 
+## Likelihood ratio test : chisq = 24.2 (p.value = 7.15e-05)
+</code></pre>
+
+<pre><code class="r">
+# Calculate probabilities for each observation Y.prob = fitted(fit,
+# outcome= FALSE)
+
+# Need a function because want to find prob in a different data set than
+# training function predict probabilities test data has to be in same
+# order fit variables
+predict_mlogit = function(testdata, fit) {
+    beta = fit$coeff
+    beta1 = beta[seq(1, length(beta), 2)]
+    beta2 = beta[seq(2, length(beta), 2)]
+    exp1 = exp(as.matrix(cbind(rep(1, dim(testdata)[1]), testdata)) %*% beta1)
+    exp2 = exp(as.matrix(cbind(rep(1, dim(testdata)[1]), testdata)) %*% beta2)
+    pi1 = exp1/(1 + exp1 + exp2)
+    pi2 = exp2/(1 + exp1 + exp2)
+    pi0 = 1/(1 + exp1 + exp2)
+    prob = cbind(pi0 = pi0, pi1 = pi1, pi2 = pi2)
+    colnames(prob) = c(0, 1, 2)
+    return(prob)
+}
+
+Y.prob = predict_mlogit(test_data[, c(4, 3)], fit)
+head(Y.prob)
+</code></pre>
+
+<pre><code>##         0       1      2
+## 2  0.8255 0.08605 0.0885
+## 4  0.8255 0.08605 0.0885
+## 6  0.6213 0.21480 0.1639
+## 8  0.5565 0.25963 0.1838
+## 10 0.5565 0.25963 0.1838
+## 12 0.2273 0.55502 0.2177
+</code></pre>
+
+<pre><code class="r">
+# classify to the category for which it has the highest estimated
+# probabilities
+
+n_train = dim(train_data)[1]
+n_test = dim(test_data)[1]
+
+Y.hat = rep(0, n_test)
+for (i in 1:n_test) {
+    if (max(Y.prob[i, ]) == Y.prob[i, 1]) {
+        Y.hat[i] = 0
+    } else if (max(Y.prob[i, ]) == Y.prob[i, 2]) {
+        Y.hat[i] = 1
+    } else if (max(Y.prob[i, ]) == Y.prob[i, 3]) {
+        Y.hat[i] = 2
+    }
+}
+Y.hat
+</code></pre>
+
+<pre><code>##   [1] 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [36] 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [71] 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0
+## [106] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0
+## [141] 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [176] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+</code></pre>
+
+<pre><code class="r">
+
+
+# Table 12.10: Classification table
+ctable = table(test_data$ME, Y.hat)
+ctable = cbind(ctable, `2` = c(0, 0, 0))
+ctable = addmargins(ctable)
+ctable
+</code></pre>
+
+<pre><code>##       0  1 2 Sum
+## 0   106  4 0 110
+## 1    48  7 0  55
+## 2    37  4 0  41
+## Sum 191 15 0 206
+</code></pre>
+
+<pre><code class="r">
+correct.rate = sum(diag(ctable)[1:3])/n_test
+correct.rate
+</code></pre>
+
+<pre><code>## [1] 0.5485
+</code></pre>
+
+<pre><code class="r">1 - correct.rate
+</code></pre>
+
+<pre><code>## [1] 0.4515
+</code></pre>
+
+<pre><code class="r">
+miss0 = sum(ctable[1, -4][-1])/ctable[1, 4]
+miss1 = sum(ctable[2, -4][-2])/ctable[2, 4]
+miss2 = sum(ctable[3, -4][-3])/ctable[3, 4]
+miss0
+</code></pre>
+
+<pre><code>## [1] 0.03636
+</code></pre>
+
+<pre><code class="r">miss1
+</code></pre>
+
+<pre><code>## [1] 0.8727
+</code></pre>
+
+<pre><code class="r">miss2
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<p>The misclassification rate is 45.1456 %. The observed (rows) and predicted (columns) outcomes is shown above in the tabulation. The break down of the misclassification for the three categories is:</p>
+
+<ul>
+<li>Never (0): 3.6364%</li>
+<li>within the past year (1): 87.2727%</li>
+<li>More than one year ago (2):  100%</li>
+</ul>
+
+<h2>Part b</h2>
+
+<pre><code class="r">
+# install.packages(&#39;ordinal&#39;)
+library(ordinal)
+train_data$ME.ordered = factor(train_data$ME, levels = c(0, 2, 1), ordered = T)
+test_data$ME.ordered = factor(test_data$ME, levels = c(0, 2, 1), ordered = T)
+fit = clm(ME.ordered ~ PB + HIST, data = train_data)
+summary(fit)
+</code></pre>
+
+<pre><code>## formula: ME.ordered ~ PB + HIST
+## data:    train_data
+## 
+##  link  threshold nobs logLik  AIC    niter max.grad cond.H 
+##  logit flexible  206  -181.61 371.23 6(0)  5.42e-13 1.7e+03
+## 
+## Coefficients:
+##      Estimate Std. Error z value Pr(&gt;|z|)    
+## PB    -0.2626     0.0773   -3.40  0.00068 ***
+## HIST   1.3724     0.4202    3.27  0.00109 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Threshold coefficients:
+##     Estimate Std. Error z value
+## 0|2   -1.344      0.575   -2.34
+## 2|1   -0.510      0.570   -0.90
+</code></pre>
+
+<pre><code class="r">
+# Table 12.12: Classification table
+Y.hat = predict(fit, newdata = test_data, type = &quot;class&quot;)$fit
+ctable = table(test_data$ME.ordered, Y.hat)
+ctable = addmargins(ctable)
+ctable
+</code></pre>
+
+<pre><code>##      Y.hat
+##         0   2   1 Sum
+##   0   106   0   4 110
+##   2    37   0   4  41
+##   1    48   0   7  55
+##   Sum 191   0  15 206
+</code></pre>
+
+<pre><code class="r">
+correct.rate = sum(diag(ctable)[1:3])/n_test
+correct.rate
+</code></pre>
+
+<pre><code>## [1] 0.5485
+</code></pre>
+
+<pre><code class="r">1 - correct.rate
+</code></pre>
+
+<pre><code>## [1] 0.4515
+</code></pre>
+
+<pre><code class="r">
+miss0 = sum(ctable[1, -4][-1])/ctable[1, 4]
+miss1 = sum(ctable[3, -4][-3])/ctable[3, 4]
+miss2 = sum(ctable[2, -4][-2])/ctable[2, 4]
+miss0
+</code></pre>
+
+<pre><code>## [1] 0.03636
+</code></pre>
+
+<pre><code class="r">miss1
+</code></pre>
+
+<pre><code>## [1] 0.8727
+</code></pre>
+
+<pre><code class="r">miss2
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<p>The misclassification rate is 45.1456 %. The observed (rows) and predicted (columns) outcomes is shown above in the tabulation. The break down of the misclassification for the three categories is:</p>
+
+<ul>
+<li>Never (0): 3.6364%</li>
+<li>within the past year (1): 87.2727%</li>
+<li>More than one year ago (2):  100%</li>
+</ul>
+
+<p>Compared to the multinomial logistic model, the overall misclassification rate is the same. Looking at the breakdown, the misclassification of the ordinal model is the same as the multinomial. We do not get better predictions. </p>
+
+</body>
+
+</html>
+
