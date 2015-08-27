@@ -1,14 +1,16 @@
 # R
 Data Analysis and Machine Learning with R
 
-## Data Mining
+- **[MSIA - Data Mining](/msia_data_mining)**
 
-## Predictive Analytics
+- **[MSIA - Predictive Analytics](/msia_predictive_analytics)**
 
-## Statistical Methods
+- **[MSIA - Statistical Methods](/msia_statistical_methods)**
 
-## Visualization
+- **[MSIA - Visualization](/msia_visualization)**
 
-## Regression Analysis
+- **[UIUC - Regression Analysis](/msia_statistical_methods)**
 
-## Market Basket
+- **[UIUC - Statistical Computing](/msia_visualization)**
+
+- **[Market Basket](/market_basket)**
