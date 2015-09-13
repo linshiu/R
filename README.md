@@ -9,8 +9,8 @@ Data Analysis and Machine Learning with R
 
 - **[MSIA - Visualization](/msia_visualization)**
 
-- **[UIUC - Regression Analysis](/msia_statistical_methods)**
+- **[UIUC - Regression Analysis](/uiuc_regression_analysis)**
 
-- **[UIUC - Statistical Computing](/msia_visualization)**
+- **[UIUC - Statistical Computing](/uiuc_statistical_computing)**
 
 - **[Market Basket](/market_basket)**
