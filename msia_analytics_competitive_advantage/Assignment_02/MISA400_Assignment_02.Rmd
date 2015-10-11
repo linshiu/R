@@ -1,0 +1,172 @@
+---
+title: "MSIA 400 - Assignment 2"
+output: word_document
+---
+# MSIA 400 - Assignment 2
+## *Steven Lin*
+
+
+## Setup
+
+```{r results='hide'}
+
+# Setup ####
+
+# My PC
+main = "/Users/Steven/Documents/Academics/3_Graduate School/2014-2015_NU/"
+
+# Aginity
+#main = "\\\\nas1/labuser169"
+
+course = "MSIA_400_Analytics for Competitive Advantage"
+datafolder = "Lab/Assignment_02"
+setwd(file.path(main,course, datafolder))
+```
+
+## Problem 1
+
+```{r results='hide'}
+# Import data
+filename = "bostonhousing.txt"
+mydata= read.table(filename, header=T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+```
+
+### Part a
+
+```{r }
+reg = lm(MEDV ~ ., mydata)
+summary(reg)
+```
+
+*INDUS* and *AGE* are least likely to be in the model because their p-values are `r round(summary(reg)$coeff["INDUS",'Pr(>|t|)'],3)` and `r round(summary(reg)$coeff["AGE",'Pr(>|t|)'],3)` respectively, indicating they **are not significant** in predicting MEDV given the other varibles are in the model (coefficients not significantly different than zero)
+
+### Part b
+
+```{r }
+reg.picked = update(reg,.~.-INDUS - AGE)
+summary(reg.picked)
+```
+### Part c
+
+```{r }
+# Is the formulate right? Should it be dividing by number of obs?
+
+# Functions to calculate
+compute_MSE = function(fit){
+  return (round(sum((fit$res)^2)/fit$df.res,3))
+}
+
+compute_MAE = function(fit){
+  return (round(sum(abs(reg$res))/fit$df.res,3))
+}
+
+# List of models
+models = list(reg= reg,reg.picked = reg.picked)
+
+results = rbind(sapply(models,compute_MSE),sapply(models,compute_MAE))
+rownames(results) = c("MSE","MAE")
+results
+```
+
+The model with the lowest MSE and MAE is preferred, so in this case pick reg.picked
+
+### Part d
+```{r }
+#step(reg)
+summary(step(reg))
+```
+
+The model from step(reg) is the same model as reg.picked from 1 b).
+
+## Problem 2
+
+```{r results='hide'}
+# Import data
+filename = "labdata.txt"
+mydata= read.table(filename, header=T)
+
+# Look at data
+names(mydata)
+head(mydata)
+nrow(mydata)
+summary(mydata)
+```
+
+### Part a
+```{r }
+reg = lm(y ~ ., mydata)
+summary(reg)
+```
+
+### Part b
+
+```{r warning=FALSE}
+# plot y vs x
+pairs(mydata, main = "Correlation coeffficients matrix and scatter plot", 
+      pch = 21, lower.panel = NULL, panel = panel.smooth, cex.labels=2)
+
+# Select x1
+
+# Load packages
+library(ggplot2)
+
+ggplot(mydata,aes(x=x1, y = y)) + 
+  geom_point(size = 3) 
+
+```
+
+X1 is the variable that is most likely to be used in a piecewise regression model.
+
+### Part c
+
+```{r results='hold'}
+mean_x1 = mean(mydata$x1)
+mean_x1
+
+reg.piece = lm(y~ (x1<mean_x1)*x1 +x2 + x3 + x4 + x5 + x6 + x7 + x8,mydata)
+summary(reg.piece)
+
+#reg.piece = lm(y~ . + (x1<mean_x1)*x1 ,mydata)
+#summary(reg.piece)
+
+# or use package
+# install.packages("segmented")
+#library(segmented)
+#reg1 = lm(y~ x1,mydata)
+#reg.piece1 = segmented(reg1, seg.Z= ~x1, psi=mean_x1)
+#summary(reg.piece1)
+
+# List of models
+models = list(reg= reg,reg.piece= reg.piece)
+
+results = rbind(sapply(models,AIC),sapply(models,BIC),
+                sapply(models,function(x) round(summary(x)$adj.r,3)))
+                
+rownames(results) = c("AIC","BIC","Adj.R2")
+results
+
+```
+
+Under the following criteria, piecewise regression is better beceause:
+* it has a higher adj r-squared 
+* BIC is lower 
+* AIC is lower
+
+Note: Piecewise regression seems to have a lot of insignificant coefficients
+
+```{r eval=FALSE, echo = FALSE}
+# Load packages
+require(knitr)
+require(markdown)
+
+# Create .md, .html, and .pdf files
+knit("My_Analysis.Rmd")
+markdownToHTML('My_Analysis.md', 'My_Analysis.html', options=c("use_xhml"))
+system("pandoc -s My_Analysis.html -o My_Analysis.pdf")
+```
