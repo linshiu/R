@@ -15,4 +15,4 @@ Data Analysis and Machine Learning with R
 
 - **[UIUC - Statistical Computing](/uiuc_statistical_computing)**
 
-- **[Market Basket](/market_basket)**
+- **[Market Basket](/market_basket)** 
